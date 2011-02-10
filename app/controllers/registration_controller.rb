@@ -10,15 +10,19 @@ class RegistrationController < ApplicationController
   def index
     render :action => 'new'
   end
-  
+
   def new
     @user = current_user
     @registration = Registration.new
     @centres  = Centre.find(:all, :order => "name")
     @events   = Event.find(:all, :conditions => ["active = ?", 1], :order => "start_date asc")
     @trains   = Train.find(:all, :order => "trnno")
-    @participants = Participant.find(:all, :conditions => ["centre_id = ?", current_user.centre_id], :order => "first_name, last_name")
-    
+    @participants_bk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "1" ],  :order => "first_name, last_name")
+    @participants_bk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "1" ],  :order => "first_name, last_name")
+    @participants_nbk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "0" ],  :order => "first_name, last_name")
+    @participants_nbk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "0" ],  :order => "first_name, last_name")
+    @participants_teachers =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "teacher", current_user.centre_id, "1" ],  :order => "first_name, last_name") 
+
     @validate_users = 1
     if @user.id == 1 && @user.centre_id == 4068
       @validate_users = 0

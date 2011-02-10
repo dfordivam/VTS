@@ -1,0 +1,7 @@
+<% for participant in participant_category -%>
+<li>
+	                    <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant) %>
+	                    <span><%= h(participant.first_name) %> <%= h(participant.middle_name) %> <%= h(participant.last_name) %></span>
+                            </li>
+ <%end %>
+

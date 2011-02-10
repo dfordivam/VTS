@@ -48,7 +48,9 @@
         </tr>
         <% end -%>
 
-		<%= render :partial => 'form' %>
+        <div id="form_partial">
+          <%= render :partial => 'form' %>
+        </div>
 	
 		<tr><td colspan="8" align="center"><%= submit_tag "Register", :id => "register", :class => "button" %></td></tr>
 	</table>
