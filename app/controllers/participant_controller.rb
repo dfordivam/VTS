@@ -16,6 +16,7 @@ class ParticipantController < ApplicationController
   end
   
   def list
+    @user = current_user
     items_per_page = 30
     
     sort = case params[:sort]
@@ -26,17 +27,29 @@ class ParticipantController < ApplicationController
       when "gyan"      then "in_gyan"
     else "rollno"
     end
-    @participants = Participant.paginate :per_page => items_per_page, :page => params[:page], 
-                                         :conditions => ["centre_id = ?", current_user.centre_id],
-                                         :order => sort
+    if @user.id == 1 && @user.centre_id == 4068 && params[:id] != nil
+      @registration = Registration.find(params[:id])
+      @participants = Participant.find(@registration.participants).paginate :per_page => items_per_page, :page => params[:page], :order => sort
+    else
+      @participants = Participant.paginate :per_page => items_per_page, :page => params[:page], :order => sort,
+        :conditions => ["centre_id = ?", current_user.centre_id]
+    end
+
   end
   
   def show
+    @user = current_user
     @participant  = Participant.find(params[:id])
-    if @participant.centre_id != current_user.centre_id
-      flash[:notice] = 'Unknown Participant'
-      redirect_to :action => 'list'
+
+    if @user.id == 1 && @user.centre_id == 4068
+    else
+      if @participant.centre_id != current_user.centre_id
+        flash[:notice] = 'Unknown Participant'
+        redirect_to :action => 'list'
+      end
     end
+
+    @participant  = Participant.find(params[:id])
   end
   
   def create
