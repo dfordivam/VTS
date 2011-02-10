@@ -1,0 +1,156 @@
+<% content_for :title, "Registration" %>
+
+<% content_for :nav, "registrations" %>
+
+<div id="loader" class="loader" style="display:none;"></div>
+
+<div class="header">
+	<p class="fl">Registration Details</p>
+	<p class="fr">
+		<%= image_tag "reply.png", :border => 0, :title => 'Reply', :class => 'cp', :id => 'replyMsg' %>
+		<%= link_to image_tag("print.png", :border => 0, :class => 'cp ml20', :title => 'Print Registration Details'), {:action => "print_details", :id => @registration.id}, :popup => ['Registration Details','location=no,menubar=no,toolbar=no'] %>
+	</p>
+	<div class="clr"><!-- --></div>
+</div>
+
+<table border="0" width="90%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
+	<tr>
+		<td>Program Name</td>
+		<td><%= @registration.event.event_name %></td>
+        <td>Centre Name</td>
+        <td><b><%= @registration.centre.name %></b></td>
+	</tr>
+	<tr><td colspan="4"><br/><strong>Arrival Details of Participants to Madhuban</strong></td></tr>
+	<tr>
+		<td>Arrival Date</td>
+		<td><%= @registration.arrival_date.strftime('%d %B %Y') %></td>
+		<td>Mode of Travel</td>
+		<td>
+			<% @trains.each do |item| %>
+				<% if item.id == @registration.arrival_by %>
+					<%= item.trnno %>
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td>Guide Name</td>
+		<td><%= @registration.guide_name %></td>
+		<td>Stay Location</td>
+		<td><%= @registration.stay_location %></td>
+	</tr>
+</table>
+
+<table width="70%" border="0" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto;">
+	<tr><td colspan="5"><hr></td></tr>
+	<tr>
+		<td width="15%">&nbsp;</td>
+		<td width="15%">Brothers</td>
+		<td width="15%">Sisters</td>
+		<td width="15%">Teachers</td>
+		<td width="20%">Grand Total</td>
+	</tr>
+	<tr>
+		<td>BK</td>
+		<td><%= @registration.bkbro %></td>
+		<td><%= @registration.bksis %></td>
+		<td><%= @registration.bkteachers %></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>Non BK</td>
+		<td><%= @registration.nbkbro %></td>
+		<td><%= @registration.nbksis %></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>Total</td>
+		<td><%= @registration.bkbro + @registration.nbkbro %></td>
+		<td><%= @registration.bksis + @registration.nbksis %></td>
+		<td><%= @registration.bkteachers %></td>
+		<td><%= @registration.bkbro + @registration.nbkbro + @registration.bksis + @registration.nbksis + @registration.bkteachers %></td>
+	</tr>
+	<tr><td colspan="5"><hr></td></tr>
+</table>
+
+<table border="0" width="90%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
+	<tr>
+		<td colspan="6"><strong>Departure Details of Participants from Madhuban</strong><br/><br/></td>
+	</tr>
+	<tr>
+		<td>No. of Returns</td>
+		<td>Departure Date</td>
+		<td>Mode of Travel</td>
+		<td>Flight / Vehicle Number</td>
+		<td>Departure Time</td>
+	</tr>
+	<% @travel.each do |list| -%>
+	<tr>
+		<td><%= list.no_of_returns %></td>
+		<td><%= list.departure_date.strftime('%d %B %Y') %></td>
+		<td>
+			<% @trains.each do |item| -%>
+				<% if item.id == list.departure_by -%>
+					<%= item.trnno -%>
+				<% end -%>
+			<% end -%>
+		</td>
+		<td><%= list.vehicle_no %></td>
+		<td><%= list.departure_time %></td>
+	</tr>
+	<% end -%>
+    <tr><td colspan="5"><br/><hr><br/></td></tr>
+    <tr>
+        <td>Notes / Remarks</td>
+        <td colspan="4" id="notes"><%= @registration.notes %></td>
+    </tr>
+</table>
+
+<br/><br/><br/>
+<p><%= link_to "&laquo; Back", {:action => 'all'}, :class => 'button' %></p>
+<br/><br/>
+
+<script type="text/javascript">
+tinyMCE.init({
+    // General options
+    mode    : "textareas",
+    theme   : "advanced",
+    height  : "350",
+    plugins : "safari,layer,table,iespell,inlinepopups,print,contextmenu,directionality,fullscreen",
+
+    // Theme options
+    theme_advanced_buttons1 : "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,forecolor,backcolor,|,tablecontrols,|,print,|,fullscreen",
+    theme_advanced_buttons2 : "",
+    theme_advanced_buttons3 : "",
+    theme_advanced_buttons4 : "",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_statusbar_location : false,
+    theme_advanced_resizing : false
+});
+</script>
+
+<div id="composeMsg" class="compose" style="display:none;">
+	<p class="title">Compose Mail</p><br/>
+	<div class="" id="replyStatus" name="replyStatus"></div>
+	<div class="ar" style="margin:0 0 20px 0;">
+		<input type="radio" name="status" value="1" checked="checked" /> Approved
+		<input type="radio" name="status" value="2" class="ml20" /> Rejected
+		<input type="hidden" id="rid" name="rid" value="<%= @registration.id %>" />
+	</div>
+	<textarea id="content" name="content" class="textarea">
+		<p>
+			Your registration with registration id <%= @registration.id %> has been approved.<br/><br/>
+			<strong>Always come with registration form.</strong><br/><br/>
+			<br/>Thanks,<br/><br/>Accommodation Dept.,<br/>Shantivan, Mt. Abu<br/>
+			<br/><u>Contact Numbers</u><br/> Ramashloke bhai : 09414291096<br/> Rajpal bhai : 09414171340<br/> Office Phone : 02974-228808<br/> FAX Number : 02974-228808
+		</p>
+		<p>----------- Original Message -----------<br/><br/><%= @registration.notes %></p>
+	</textarea>
+	<br/>
+	<p class="ar">
+		<input type="button" class="button" id="sendMsg" name="sendMsg" value="Send" />
+		<input type="button" class="button ml20" id="closeMsg" name="closeMsg" value="Cancel" />
+	</p>
+</div>

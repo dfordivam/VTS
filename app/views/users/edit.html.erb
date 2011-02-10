@@ -1,0 +1,39 @@
+<% content_for :title, "Centre Info" %>
+
+<% content_for :nav, "info" %>
+
+<div class="header">Edit Centre Details</div>
+
+<% form_tag '/users/update' do -%>
+
+	<table border="0" width="85%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+		<tr><td colspan="4" align="right"><span class="req">*</span> Indicates Required Field</td></tr>
+
+		<tr>
+			<td width="20%">Zone Name</td>
+			<td width="30%">
+				<select class="select" name="centre[zone_id]">
+					<option value=""></option>
+					<% @zones.each do |zone| %>
+					<option value="<%= zone.id %>" <%= 'selected' if zone.id == @centre.zone_id %>>
+					<%= zone.name %></option> <% end %>
+				</select>
+			</td>
+			<td width="20%">Centre Type</td>
+			<td width="30%">
+				<%= select 'centre', 'centre_type', ["Centre", "Sub Centre", "Geetha Patashala"], {}, {:class => "select"} %>
+			</td>
+		</tr>
+
+		<%= render :partial => 'form' %>
+
+		<tr><td colspan="4">&nbsp;</td></tr>
+
+		<tr><td colspan="4" align="center">
+			<%= submit_tag "Update", :class => 'button' %>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<%= link_to "Cancel", {:action => 'show'}, :class => 'button' %>
+		</td></tr>
+	</table>
+
+<% end -%>

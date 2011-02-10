@@ -1,0 +1,28 @@
+<% content_for :title, "Events" %>
+
+<% content_for :nav, "events" %>
+
+<div class="header">Edit Event Details</div>
+
+<% form_tag :action => 'update', :id => @event do %>
+
+    <table border="0" width="85%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+        <tr><td colspan="2" align="right"><span class="req">*</span> Indicates Required Field</td></tr>
+
+        <tr>
+            <td align="right" width="45%">&nbsp;</td>
+            <td align="left">&nbsp;</td>
+        </tr>
+
+        <%= render :partial => 'form' %>
+
+        <tr><td colspan="2">&nbsp;</td></tr>
+
+        <tr><td colspan="2" align="center">
+            <%= submit_tag "Update", :class => 'button' %>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <%= link_to "Cancel", {:action => 'list'}, :class => 'button' %>
+        </td></tr>
+    </table>
+
+<% end %>

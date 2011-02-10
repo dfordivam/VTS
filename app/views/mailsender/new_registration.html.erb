@@ -1,0 +1,44 @@
+Om Shanti,
+<br/><br/>
+<u>Registration Details :</u><br/>
+<table width="90%" cellspacing="4" cellpadding="2" border="0" align="left"><tbody>
+	<tr>
+		<td>Centre Name</td>
+		<td><strong><%= @registration.centre.name %></td>
+		<td colspan="2"></td>
+	</tr>
+	<tr>
+		<td>Registration ID</td>
+		<td><%= @registration.id %></td>
+		<td>Event Name</td>
+		<td><strong><%= @registration.event.event_name %></td>
+	</tr>
+	<tr>
+		<td>Arrival Date</td>
+		<td><%= @registration.arrival_date.strftime('%d %B %Y') %></td>
+		<td>Mode of Travel</td>
+		<td>
+			<% @trains.each do |item| -%>
+				<% if item.id == @registration.arrival_by -%>
+					<%= item.trnno %>
+				<% end -%>
+			<% end -%>
+		</td>
+	</tr>
+	<tr><td colspan="4"><hr/></td></tr>
+	<tr>
+		<td width="25%">Brothers</td>
+		<td width="25%">Sisters</td>
+		<td width="25%">Teachers</td>
+	</tr>
+	<tr>
+		<td><%= @registration.bkbro %></td>
+		<td><%= @registration.bksis %></td>
+		<td><%= @registration.bkteachers %></td>
+	</tr>
+	<tr>
+		<td>Notes</td>
+		<td colspan="3"><%= @registration.notes %></td>
+	</tr>
+	<tr><td colspan="4"><br/>In Baba's yaad ...</td></tr>
+</tbody></table>

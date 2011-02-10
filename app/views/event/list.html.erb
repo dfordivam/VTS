@@ -1,0 +1,44 @@
+<% content_for :title, "Events" %>
+
+<% content_for :nav, "events" %>
+
+<p class="ar"><%= link_to "Create New Event &raquo;", {:action => 'new'}, :class => 'button' %></p>
+
+<% if @events %>
+    <div class="header">
+        <%= page_entries_info @events, :entry => 'event' %>
+    </div>
+    <%= will_paginate @events %>
+    
+    <table class="highlight" border="0" width="95%" cellspacing="0" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+        <tr>
+            <td width="150px"><strong>Event Name</strong></td>
+            <td width="120px"><strong>Wing Name</strong></td>
+            <td width="100px"><strong>Start Date</strong></td>
+            <td width="100px"><strong>End Date</strong></td>
+            <td width="80px"><strong>Location</strong></td>
+            <td width="50px" align="center"><strong>Active?</strong></td>
+            <td width="50px" align="center"><strong>Edit &darr;</strong></td>
+            <td width="50px" align="center"><strong>Delete &darr;</strong></td>
+        </tr>
+        <tr height="30"><td colspan="8"><hr/></td></tr>
+    	<% for event in @events %>
+    		<tr class="record">
+    			<td align="left"><%= h(event.event_name)%></td>
+    			<td align="left"><%= h(event.wing_name)%></td>
+    			<td align="left"><%= h(event.start_date.strftime('%d %B %Y')) %></td>
+    			<td align="left"><%= h(event.end_date.strftime('%d %B %Y')) %></td>
+                <td align="left"><%= h(event.location)%></td>
+                <% if event.active %>
+                    <td align="center"><input type="checkbox" id="event_<%= event.id %>" class="event_check" checked="checked"/></td>
+                <% else %>
+                    <td align="center"><input type="checkbox" id="event_<%= event.id %>" class="event_check" /></td>
+                <% end %>
+    			<td width="50px" align="center"><%= link_to image_tag("edit.png", :border => 0, :title => 'Edit'), {:action => 'edit', :id => event} %></td>
+    			<td width="50px" align="center"><%= link_to image_tag("delete.png", :border => 0, :title => 'Delete'), {:action => 'delete', :id => event}, :confirm => 'Are you sure, you want to delete this event?' %></td>
+    		</tr>
+    	<% end %>
+    </table>
+<% else %>
+    <center><br/><br/><h2>No events listed / active</h2></center>
+<% end %>

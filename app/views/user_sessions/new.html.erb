@@ -1,0 +1,47 @@
+<% content_for :title, "Login" %>
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$('#user_session_username').focus();
+	});
+</script>
+
+<div class="login">
+	<center>
+		<% form_for @user_session do |f| %>
+			<table align="center" width="100%" cellspacing="5" cellpadding="2" style="margin: 0 auto;">
+				<tr><td colspan="2">
+					<h1><a href="http://www.bkinfo.in" target="_blank">Brahma Kumaris</a></h1>
+				</td></tr>
+				<tr><td colspan="2">
+					<%= f.error_messages %>
+					<% if flash[:notice] -%>
+						<div id="notice" align="center"><%= flash[:notice] %></div>
+					<% end -%>
+				</td></tr>
+				<tr><td colspan="2">&nbsp;</td></tr>
+				<tr>
+					<td align="right" width="45%"><%= f.label :username %> :</td>
+					<td align="left"><%= f.text_field :username, :size => 20, :class => 'text' %></td>
+				</tr>
+                <tr>
+                    <td align="right" width="45%">&nbsp;</td>
+                    <td align="left"><span style="font-size:12px;">Enter your centre email address as username</span></td>
+                </tr>
+				<tr><td colspan="2">&nbsp;</td></tr>
+				<tr>
+					<td align="right"><%= f.label :password %> :</td>
+					<td align="left"><%= f.password_field :password, :size => 20, :class => 'text' %></td>
+				</tr>
+                <tr>
+                    <td align="right" width="45%">&nbsp;</td>
+                    <td align="left"><span style="font-size:12px;">Enter your password sent you through email</span></td>
+                </tr>
+				<tr><td colspan="2">&nbsp;</td></tr>
+                <tr><td colspan="2" align="right"><a style="font-size: 12px;" href="/forgot_password">Forgot Password?</a></td></tr>
+				<tr><td colspan="2"><hr/><br/></td></tr>
+				<tr><td colspan="2" align="center"><%= f.submit "Login", :class => 'button' %></td></tr>
+			</table>
+		<% end %>
+	</center>
+<div>

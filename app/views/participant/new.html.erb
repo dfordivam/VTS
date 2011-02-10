@@ -1,0 +1,39 @@
+<% content_for :title, "Participants" %>
+
+<% content_for :nav, "contacts" %>
+
+<div class="header">Create New Participant</div>
+
+<table border="0" width="85%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto;">
+	<tr><td><%= error_messages_for 'participant'%><%= error_messages_for 'address' %></td></tr>
+</table>
+
+<% form_tag :action => 'create' do %>
+
+	<table border="0" width="85%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+		<tr><td colspan="4" align="right"><span class="req">*</span> Indicates Required Field</td></tr>
+	
+		<tr>
+			<td width="20%">Category</td>
+			<td width="30%">
+				<%= select 'participant', 'category', ["Brother", "Sister", "Teacher"], {}, {:class => "select pcat"} %>
+			</td>
+			<td width="20%">BK ? <span class="req">*</span></td>
+			<td width="30%">
+				<%= radio_button 'participant', 'is_bk', '1', {:checked => true} %>&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<%= radio_button 'participant', 'is_bk', '0' %>&nbsp;&nbsp;No
+			</td>
+		</tr>
+	
+		<%= render :partial => 'form' %>
+
+		<tr>
+			<td colspan="4" align="center">
+				<%= submit_tag "Create", :class => 'button' %>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<%= link_to "Cancel", {:action => 'list'}, :class => 'button' %>
+			</td>
+		</tr>
+	</table>
+
+<% end %>

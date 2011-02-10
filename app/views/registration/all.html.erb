@@ -1,0 +1,140 @@
+<% content_for :title, "All Registrations" %>
+
+<% content_for :nav, "registrations" %>
+
+<table border="0" width="95%" cellspacing="0" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+	<tr><td align="right">
+		Registrations Sort : 
+		<select id="regSort" class="select" style="width: 100px;">
+			<option value="byEvent" selected="selected">By Event</option>
+			<option value="byID">By ID</option>
+		</select>
+	</td></tr>
+</table>
+
+<div id="reg_by_events">
+	<% if @registrations -%>
+	    <div class="header">
+	        <%= page_entries_info @registrations, :entry => 'registration' %>
+	    </div>
+	    <%= will_paginate @registrations %>
+	    
+	    <table class="highlight" border="0" width="95%" cellspacing="0" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+	    	<% temp = "" %>
+	    	<% for registration in @registrations -%>
+	    		<%	if temp != registration.event.event_name %>
+	    			<% if temp != "" -%>
+	    				<tr><td colspan="12">&nbsp;</td></tr>
+	    			<% end -%>
+	    				<tr><td colspan="12">
+	    					<p class="etitle"><%= h(registration.event.event_name) %></p>
+	    				</td></tr>
+	    				<tr>
+	                        <td>&nbsp;</td>
+	    					<td width="80px"><strong>Reg. No.</strong></td>
+	    					<td width="120px"><strong>Reg. Date</strong></td>
+	    					<td width="150px"><strong>Guide Name</strong></td>
+	                        <td width="150px"><strong>Centre Name</strong></td>
+	    					<td width="200px"><strong>Arrival Date</strong></td>
+	    					<td width="125px"><strong>Mode of Travel</strong></td>
+	    					<td width="75px" align="right"><strong>Teachers</strong></td>
+	    					<td width="75px" align="right"><strong>Sisters</strong></td>
+	    					<td width="75px" align="right"><strong>Brothers</strong></td>
+	    					<td width="100px" align="right"><strong>Total</strong></td>
+	    					<td>&nbsp;</td>
+	    				</tr>
+	    		<% end -%>
+	    		<tr class="record">
+	                <td width="50px" align="center">
+	                    <% if registration.status == 1 -%>
+	                        <%= image_tag "accepted.png", :border => 0, :title => 'Accepted' %>
+	                    <%elsif registration.status == 2 -%>
+	                        <%= image_tag "rejected.png", :border => 0, :title => 'Rejected' %>
+	                    <% else -%>
+	                        <%= image_tag "waiting.png", :border => 0, :title => 'Waiting for Confirmation' %>
+	                    <% end -%>
+	                </td>
+	    			<td><%= h(registration.id)%></td>
+	    			<td><%= h(Time.at(registration.created_on).strftime('%d/%m/%Y'))%></td>
+	    			<td><%= h(registration.guide_name)%></td>
+	                <td><%= h(registration.centre.name)%></td>
+	    			<td><%= h(registration.arrival_date.strftime('%d %B %Y')) %></td>
+	    			<td>
+	    				<% @trains.each do |item| -%>
+	    					<% if item.id == registration.arrival_by -%>
+	    						<%= h(item.trnno) %>
+	    					<% end -%>
+	    				<% end -%>
+	    			</td>
+	    			<td align="right"><%= registration.bkteachers %></td>
+	    			<td align="right"><%= registration.bksis + registration.nbksis %></td>
+	    			<td align="right"><%= registration.bkbro + registration.nbkbro %></td>
+	    			<td align="right"><%= registration.bkteachers + registration.bkbro + registration.bksis + registration.nbkbro + registration.nbksis %></td>
+	    			<td width="50px" align="center"><%= link_to image_tag("view.png", :border => 0, :title => 'View Registration Details'), {:action => 'view', :id => registration} %></td>
+	    		</tr>
+	    		<% temp = registration.event.event_name %>
+	    	<% end -%>
+	    </table>
+	<% else -%>
+	    <center><br/><br/><h2>No registrations listed / active</h2></center>
+	<% end -%>
+</div>
+
+<div id="reg_by_ids" style="display: none;">
+	<% if @registrations_by_id -%>
+	    <div class="header">
+	        <%= page_entries_info @registrations_by_id, :entry => 'registration' %>
+	    </div>
+	    <%= will_paginate @registrations_by_id %>
+	    
+	    <table class="highlight" border="0" width="95%" cellspacing="0" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+			<tr>
+                <td>&nbsp;</td>
+				<td width="80px"><strong>Reg. No.</strong></td>
+				<td width="120px"><strong>Reg. Date</strong></td>
+				<td width="150px"><strong>Guide Name</strong></td>
+                <td width="150px"><strong>Centre Name</strong></td>
+				<td width="200px"><strong>Arrival Date</strong></td>
+				<td width="125px"><strong>Mode of Travel</strong></td>
+				<td width="75px" align="right"><strong>Teachers</strong></td>
+				<td width="75px" align="right"><strong>Sisters</strong></td>
+				<td width="75px" align="right"><strong>Brothers</strong></td>
+				<td width="100px" align="right"><strong>Total</strong></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr><td colspan="12">&nbsp;</td></tr>
+	    	<% for registration in @registrations_by_id -%>
+	    		<tr class="record">
+	                <td width="50px" align="center">
+	                    <% if registration.status == 1 -%>
+	                        <%= image_tag "accepted.png", :border => 0, :title => 'Accepted' %>
+	                    <%elsif registration.status == 2 -%>
+	                        <%= image_tag "rejected.png", :border => 0, :title => 'Rejected' %>
+	                    <% else -%>
+	                        <%= image_tag "waiting.png", :border => 0, :title => 'Waiting for Confirmation' %>
+	                    <% end -%>
+	                </td>
+	    			<td><%= h(registration.id)%></td>
+	    			<td><%= h(Time.at(registration.created_on).strftime('%d/%m/%Y'))%></td>
+	    			<td><%= h(registration.guide_name)%></td>
+	                <td><%= h(registration.centre.name)%></td>
+	    			<td><%= h(registration.arrival_date.strftime('%d %B %Y')) %></td>
+	    			<td>
+	    				<% @trains.each do |item| -%>
+	    					<% if item.id == registration.arrival_by -%>
+	    						<%= h(item.trnno) %>
+	    					<% end -%>
+	    				<% end -%>
+	    			</td>
+	    			<td align="right"><%= registration.bkteachers %></td>
+	    			<td align="right"><%= registration.bksis + registration.nbksis %></td>
+	    			<td align="right"><%= registration.bkbro + registration.nbkbro %></td>
+	    			<td align="right"><%= registration.bkteachers + registration.bkbro + registration.bksis + registration.nbkbro + registration.nbksis %></td>
+	    			<td width="50px" align="center"><%= link_to image_tag("view.png", :border => 0, :title => 'View Registration Details'), {:action => 'view', :id => registration} %></td>
+	    		</tr>
+	    	<% end -%>
+	    </table>
+	<% else -%>
+	    <center><br/><br/><h2>No registrations listed / active</h2></center>
+	<% end -%>
+</div>

@@ -1,0 +1,32 @@
+<% content_for :title, "Home" %>
+
+<% content_for :nav, "home" %>
+
+<div class="greet">Welcome <%= @user.centre.incharge %>, <%= @user.centre.name %> (<%= @user.centre.centre_type %>)</div>
+<br/><br/>
+<% if current_user.id == 1 -%>
+	<div class="help">
+		<p>Admin can manage registrations from here.</p>
+		<br/>
+	</div>
+<% else -%>
+	<div class="help">
+		<p>If you want to inform Madhuban's Accommodation department about the number of BKs / non-BKs attending a particular program at Madhuban / GyanSarovar / Shantivan then click '<strong>New Registration</strong>' button.</p>
+		<br/>
+		<p>If you want to send the complete details of the trip about which you already informed Madhuban's Accommodation department click '<strong>Registration Details</strong>' button.</p>
+		<br/>
+		<p>To know the information about different students and contacts that you already entered click '<strong>Participant Details</strong>' button.</p>
+		<br/>
+		<p>The information about your centre that we have in our records is listed in the '<strong>Centre Details</strong>' screen. You can view and edit the centre information by clicking the '<strong>Centre Details</strong>' button.
+        <br/><br/>
+		<p class="help">
+			<strong>Help : Online Registration User Guide</strong>
+			<ul>
+				<li>For guide in English, <%= link_to "download here", en_guide_path %></li>
+				<li>For guide in Hindi, <%= link_to "download here", hi_guide_path %></li>
+			</ul>
+		</p>
+		<br/><br/>
+		<p style="color: #DF3400;">Note : Always come with corresponding <strong>Registration Form print out</strong> when you attend any program.</p>
+	</div>
+<% end -%>

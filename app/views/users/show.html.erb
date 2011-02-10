@@ -1,0 +1,71 @@
+<% content_for :title, "Centre Info" %>
+
+<% content_for :nav, "info" %>
+
+<div class="fr ml20"><%= link_to "Change Password", {:action => 'password', :id => @centre.name.downcase.gsub(' ', '-')}, :class => 'button' %></div>
+<div class="fr"><%= link_to "Edit Details", {:action => 'edit', :id => @centre.name.downcase.gsub(' ', '-')}, :class => 'button' %></div>
+<div class="clr"><!-- --></div>
+
+<div class="header"><%= @centre.incharge.capitalize %>, <%= @centre.name.capitalize %> (<%= @centre.centre_type %>)</div>
+
+<table border="0" width="85%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+    <tr height="30">
+	   <td colspan="4" align="right"><span class="req">*</span> Update centre details regularly.</td>
+    </tr>
+	<tr height="20">
+		<td width="20%"><strong>Zone Name :</strong></td>
+		<td width="30%"><%= @centre.zone.name  %></td>
+		<td width="20%"><strong>Centre Type :</strong></td>
+		<td width="30%"><%= @centre.centre_type %></td>
+	</tr>
+	<tr height="20">
+		<td><strong>Centre Name :</strong></td>
+		<td ><%= @centre.name  %></td>
+		<td><strong>Centre Incharge :</strong></td>
+		<td><%= @centre.incharge %></td>
+	</tr>
+    <tr><td colspan="4"><br/><strong>Address Details</strong><br/></td></tr>
+	<tr height="20">
+		<td>Address Line 1 :</td>
+		<td><%= @centre.address.addr1 %></td>
+		<td>Address Line 2 :</td>
+		<td><%= @centre.address.addr2 %></td>
+	</tr>
+	<tr height="20">
+		<td>City :</td>
+		<td><%= @centre.address.city %></td>
+		<td>State :</td>
+		<td><%= @centre.address.state %></td>
+	</tr>
+	<tr height="20">
+		<td>Pin code :</td>
+		<td><%= @centre.address.pincode %></td>
+		<td>Country :</td>
+		<td><%= @centre.address.country %></td>
+	</tr>
+    <tr><td colspan="4"><br/><strong>Contact Details</strong><br/></td></tr>
+	<tr height="20">
+		<td>Telephone Number :</td>
+		<td><%= @centre.contact.phone  %></td>
+		<td>Mobile Number :</td>
+		<td><%= @centre.contact.mobile %></td>
+	</tr>
+	<tr height="20">
+		<td>Office Number :</td>
+		<td><%= @centre.contact.office_no %></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr height="20">
+		<td>Resident Fax :</td>
+		<td><%= @centre.contact.fax %></td>
+		<td>Office Fax :</td>
+		<td><%= @centre.contact.office_fax %></td>
+	</tr>
+	<tr height="20">
+		<td>Email 1 :</td>
+		<td><%= @centre.contact.email1 %></td>
+		<td>Email 2 :</td>
+		<td><%= @centre.contact.email2 %></td>
+	</tr>
+</table>

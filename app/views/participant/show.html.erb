@@ -1,0 +1,107 @@
+<% content_for :title, "Participants" %>
+
+<% content_for :nav, "contacts" %>
+
+<div class="header"><%= @participant.first_name  %> <%= @participant.middle_name %> <%= @participant.last_name  %></div>
+
+<% add_year = increment_year(@participant.updated_at) %>
+
+<table border="0" width="85%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+	<tr height="20">
+		<td width="20%"><strong>Category :</strong></td>
+		<td width="30%"><%= @participant.category %></td>
+		<td width="20%"><strong>BK ? :</strong></td>
+		<td width="30%"><% if @participant.is_bk -%> Yes <% else -%> No <% end -%></td>
+	</tr>
+	<tr height="20">
+		<td><strong>First Name :</strong></td>
+		<td><%= @participant.first_name %></td>
+		<td><strong>Middle Name :</strong></td>
+		<td><%= @participant.middle_name %></td>
+	</tr>
+	<tr height="20">
+		<td><strong>Last Name :</strong></td>
+		<td><%= @participant.last_name  %></td>
+		<td>Age :</td>
+		<td><%= @participant.age %></td>
+	</tr>
+    <tr><td colspan="4"><br/><strong>Address Details</strong><br/></td></tr>
+	<tr height="20">
+		<td>Address Line 1 :</td>
+		<td><%= @participant.address.addr1 %></td>
+		<td>Address Line 2 :</td>
+		<td><%= @participant.address.addr2 %></td>
+	</tr>
+	<tr height="20">
+		<td>City :</td>
+		<td><%= @participant.address.city %></td>
+		<td>State :</td>
+		<td><%= @participant.address.state %></td>
+	</tr>
+	<tr height="20">
+		<td>Pin code :</td>
+		<td><%= @participant.address.pincode %></td>
+		<td>Country :</td>
+		<td><%= @participant.address.country %></td>
+	</tr>
+    <tr><td colspan="4"><br/><strong>Contact Details</strong><br/></td></tr>
+	<tr height="20">
+		<td>Telephone Number :</td>
+		<td><%= @participant.contact.phone %></td>
+		<td>Mobile Number :</td>
+		<td><%= @participant.contact.mobile %></td>
+	</tr>
+	<tr>
+		<td>Office Number :</td>
+		<td><%= @participant.contact.office_no %></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>Resident Fax :</td>
+		<td><%= @participant.contact.fax %></td>
+		<td>Office Fax :</td>
+		<td><%= @participant.contact.office_fax %></td>
+	</tr>
+	<tr height="20">
+		<td>Email 1 :</td>
+		<td><%= @participant.contact.email1 %></td>
+		<td>Email 2 :</td>
+		<td><%= @participant.contact.email2 %></td>
+	</tr>
+    <tr><td colspan="4"><br/><strong>Personal Information</strong><br/></td></tr>
+	<tr height="20">
+        <td>Years in Gyan :</td>
+        <td><%= @participant.in_gyan + add_year %></td>
+        <td>Observing Purity (Yrs.) :</td>
+        <td><%= @participant.in_purity + add_year %></td>
+	</tr>
+    <tr height="20">
+        <td>Observing Purity of Food (Yrs.) :</td>
+        <td><%= @participant.in_food + add_year %></td>
+        <td>Regular in Murli class (Yrs.) :</td>
+        <td><%= @participant.in_murli + add_year %></td>
+    </tr>
+	<tr height="20">
+        <td>Nationality :</td>
+        <td><%= @participant.nationality %></td>
+		<td>Education :</td>
+		<td><%= @participant.education %></td>
+	</tr>
+	<tr height="20">
+		<td>Profession :</td>
+		<td><%= @participant.profession %></td>
+		<td>Skills :</td>
+		<td><%= @participant.skills %></td>
+	</tr>
+	<tr height="20">
+		<td>Blood Group :</td>
+		<td><%= @participant.blood_group %></td>
+		<td>PAN Number :</td>
+		<td><%= @participant.PAN %></td>
+	</tr>
+</table>
+
+<br/><br/><br/>
+<p><%= link_to "&laquo; Back", {:action => 'list'}, :class => 'button' %></p>
+<br/><br/>

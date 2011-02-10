@@ -1,0 +1,35 @@
+	<tr>
+		<td align="right"><span class="req">*</span> Event Name :</td>
+		<td align="left"><%= text_field 'event', 'event_name', :size => 30, :maxlength => 255, :class => "text" %></td>
+	</tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+	<tr>
+		<td align="right"><span class="req">*</span> Wing Name :</td>
+		<td align="left"><%= text_field 'event', 'wing_name', :size => 30, :maxlength => 255, :class => "text" %></td>
+	</tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+	<tr>
+		<td align="right"><span class="req">*</span> Start Date :</td>
+		<% if @event.start_date %>
+            <td align="left"><%= text_field 'event', 'start_date', :value => "#{@event.start_date.strftime('%d %B %Y')}", :size => 30, :maxlength => 16, :class => "text" %></td>
+		<% else %>
+            <td align="left"><%= text_field 'event', 'start_date', :value => "", :size => 30, :maxlength => 16, :class => "text" %></td>
+        <% end %>
+	</tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+	<tr>
+		<td align="right"><span class="req">*</span> End Date :</td>
+        <% if @event.start_date %>
+            <td align="left"><%= text_field 'event', 'end_date', :value => "#{@event.end_date.strftime('%d %B %Y')}", :size => 30, :maxlength => 16, :class => "text" %></td>
+        <% else %>
+            <td align="left"><%= text_field 'event', 'end_date', :value => "", :size => 30, :maxlength => 16, :class => "text" %></td>
+        <% end %>
+	</tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+    <tr>
+        <td align="right"><span class="req">*</span> Location :</td>
+        <td align="left">
+            <%= select 'event', 'location', ["Shantivan", "Gyan Sarovar", "Pandav Bhawan"], {}, {:class => "select"} %>
+        </td>
+    </tr>
+	<tr><td colspan="2">&nbsp;</td></tr>

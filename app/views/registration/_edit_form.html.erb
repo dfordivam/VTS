@@ -1,0 +1,150 @@
+	<tr><td colspan="4"><br/><strong>Arrival Details of Participants to Madhuban</strong> <span class="req">*</span></td></tr>
+	<tr>
+		<td>Arrival Date</td>
+		<td><input class="text" type="text" id="adate" name="registration[arrival_date]" size="30" value="<%= @registration.arrival_date.strftime('%d %B %Y') %>" readonly="readonly"/></td>
+		<td>Mode of Travel</td>
+		<td>
+			<select class="select" id="transport" name="registration[arrival_by]" style="width: 150px;">
+				<option value="0"></option>
+				<% @trains.each do |item| -%>
+				    <% if item.id == @registration.arrival_by -%>
+                        <option value="<%= item.id %>" selected="selected"><%= item.trnno %></option>
+                    <% else -%>
+				        <option value="<%= item.id %>"><%= item.trnno %></option>
+                    <% end -%>
+				<% end -%>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Guide Name</td>
+		<td><input class="text" id="guide" type="text" name="registration[guide_name]" size="30" maxlength="50" value="<%= h(@registration.guide_name) %>" /></td>
+		<td>Stay Location</td>
+		<td>
+			<select class="select" name="registration[stay_location]" style="width: 150px;">
+				<option value="Shantivan" selected="selected">Shantivan</option>
+			</select>
+		</td>
+	</tr>
+	</table>
+	
+	<table width="70%" border="0" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto;">
+		<tr><td colspan="6"><hr></td></tr>
+		<tr>
+			<td width="15%">&nbsp;</td>
+			<td width="15%">Brothers</td>
+			<td width="15%">Sisters</td>
+			<td width="15%">Teachers</td>
+			<td width="20%">Grand Total</td>
+		</tr>
+		<tr>
+			<td>BK</td>
+			<td><input class="text numeric" type="text" size="4" name="registration[bkbro]" maxlength="4" id="registration_bk_bro" value="<%= h(@registration.bkbro) %>" /></td>
+			<td><input class="text numeric" type="text" size="4" name="registration[bksis]" maxlength="4" id="registration_bk_sis" value="<%= h(@registration.bksis) %>" /></td>
+			<td><input class="text numeric" type="text" size="4" name="registration[bkteachers]" maxlength="4" id="registration_bk_teachers" value="<%= h(@registration.bkteachers) %>" /></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Non BK</td>
+			<td><input class="text numeric" type="text" size="4" name="registration[nbkbro]" maxlength="4" id="registration_nbk_bro" value="<%= h(@registration.nbkbro) %>" /></td>
+			<td><input class="text numeric" type="text" size="4" name="registration[nbksis]" maxlength="4" id="registration_nbk_sis" value="<%= h(@registration.nbksis) %>" /></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Total</td>
+			<td><input class="text" type="text" size="4" readonly="readonly" id="registration_total_bro" value="<%= h(@registration.bkbro+@registration.nbkbro) %>" /></td>
+			<td><input class="text" type="text" size="4" readonly="readonly" id="registration_total_sis" value="<%= h(@registration.bksis+@registration.nbksis) %>" /></td>
+			<td><input class="text" type="text" size="4" readonly="readonly" id="registration_total_teachers" value="<%= h(@registration.bkteachers) %>" /></td>
+			<td>
+				<input class="text" type="text" size="4" readonly="readonly" id="registration_grand_total" value="<%= h(@registration.bkbro+@registration.nbkbro+@registration.bksis+@registration.nbksis+@registration.bkteachers+@registration.children) %>" />
+				<input type="hidden" size="4" name="registration[children]" id="registration_children" value="0" />
+			</td>
+		</tr>
+		<tr><td colspan="6"><hr></td></tr>
+	</table>
+	
+	<table border="0" width="90%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
+		<tr>
+			<td colspan="6"><strong>Departure Details of Participants from Madhuban</strong> <span class="req">*</span><br/><br/></td>
+		</tr>
+		<tr>
+			<td>No. of People Departing</td>
+			<td>Departure Date</td>
+			<td>Mode of Travel</td>
+			<td>Flight / Vehicle Number</td>
+			<td>Departure Time</td>
+			<td>&nbsp;</td>
+		</tr>
+		<% count = 1 %>
+        <% for travel in @travels %>
+			<tr id="tr<%= h(count) %>">
+				<td><input class="text returns" id="return-<%= h(count) %>" type="text" name="travel_info<%= h(count) %>[no_of_returns]" size="5" maxlength="4" value="<%= h(travel.no_of_returns) %>" /></td>
+				<td><input class="text" id="ddate-<%= h(count) %>" type="text" name="travel_info<%= h(count) %>[departure_date]" size="20" readonly="readonly" value="<%= h(travel.departure_date.strftime('%d %B %Y')) %>" /></td>
+				<td><select class="select" id="depby-<%= h(count) %>" name="travel_info<%= h(count) %>[departure_by]" style="width: 120px;">
+						<option value="0"></option>
+						<% @trains.each do |item| %>
+							<% if item.id == travel.departure_by %>
+                                <option value="<%= item.id %>" selected="selected"><%= item.trnno %></option>
+							<% else %>
+                                <option value="<%= item.id %>"><%= item.trnno %></option>
+							<% end %>
+						<% end %>
+				</select></td>
+				<td><input class="text" id="vehicle-<%= h(count) %>" type="text" name="travel_info<%= h(count) %>[vehicle_no]" size="10" maxlength="20" value="<%= h(travel.vehicle_no) %>" /></td>
+				<td>
+					<select class="select" id="time-<%= h(count) %>" name="travel_info<%= h(count) %>[departure_time]" style="width: 120px;">
+						<option value="Morning" <% if travel.departure_time == "Morning" %> selected="selected" <% end %>>Morning</option>
+						<option value="Afternoon" <% if travel.departure_time == "Afternoon" %> selected="selected" <% end %>>Afternoon</option>
+						<option value="Evening" <% if travel.departure_time == "Evening" %> selected="selected" <% end %>>Evening</option>
+					</select>
+				</td>
+				<td align="right"><a onclick="Toggle('tr<%= h(count+1) %>')"><img id="img<%= h(count+1) %>" class="cp" src="/images/plus.gif" alt="Add" /></a></td>
+			</tr>
+			<% count+= 1 %>
+		<% end %>
+		<% (count..5).each do |i| %>
+			<tr id="tr<%= h(i) %>" style="display: none;">
+				<td><input class="text returns" id="return-<%= h(i) %>" type="text" name="travel_info<%= h(i) %>[no_of_returns]" size="5" maxlength="4" /></td>
+				<td><input class="text date" id="ddate-<%= h(i) %>" type="text" name="travel_info<%= h(i) %>[departure_date]" size="20" readonly="readonly" /></td>
+				<td><select class="select" id="depby-<%= h(i) %>" name="travel_info<%= h(i) %>[departure_by]" style="width: 120px;">
+						<option value="0"></option>
+						<% @trains.each do |item| %><option value="<%= item.id %>"><%= item.trnno %></option><% end %>
+						<option value="other">Other</option>
+				</select></td>
+				<td><input class="text" id="vehicle-<%= h(i) %>" type="text" name="travel_info<%= h(i) %>[vehicle_no]" size="10" maxlength="20" /></td>
+				<td>
+					<select class="select" id="time-<%= h(i) %>" name="travel_info<%= h(i) %>[departure_time]" style="width: 120px;">
+						<option value="Morning">Morning</option>
+						<option value="Afternoon">Afternoon</option>
+						<option value="Evening">Evening</option>
+					</select>
+				</td>
+				<% if i != 5 %>
+    				<td align="right"><a onclick="Toggle('tr<%= h(i+1) %>')"><img id="img<%= h(i+1) %>" class="cp" style="cursor: hand;" src="/images/plus.gif" alt="Add" /></td>
+				<% else %>
+				    <td align="right">&nbsp;</td>
+				<% end %>
+			</tr>
+		<% end %>
+        <tr><td colspan="6"><br/><hr><br/></td></tr>
+        <tr><td colspan="6"><strong>Select Participants from below list </strong> <span class="req">*</span><br/><br/></td></tr>
+        <tr><td colspan="6">
+        	<ul id="students_list" class="list">
+            <% if @participants %>
+                <% for participant in @participants %>
+				    <li>
+				    	<%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant) %>
+				    	<span><%= h(participant.first_name) %> <%= h(participant.last_name) %></span>
+					</li>
+				<% end %>
+            <% end %>
+        	</ul>
+        </td></tr>
+        <tr><td colspan="6"><br/><hr><br/></td></tr>
+        <tr>
+            <td>Notes / Remarks</td>
+            <td colspan="4"><%= text_area 'registration', 'notes', :cols => 50, :rows => 3, :class => "textarea", :style => "height: 90px;"  %></td>
+        </tr>
+        <tr><td colspan="6">&nbsp;</td></tr>
+ 

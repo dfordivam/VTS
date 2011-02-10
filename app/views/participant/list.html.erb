@@ -1,0 +1,59 @@
+<% content_for :title, "Participants" %>
+
+<% content_for :nav, "contacts" %>
+
+<div style="width: 95%; margin: 0 auto 10px;">
+	<div class="fl al"><%= link_to "Create New Participant &raquo;", {:action => 'new'}, :class => 'button' %></div>
+	<div class="fr ar"></div>
+	<div class="clr"></div>
+</div>
+
+<% if @participants -%>
+    <div class="header">
+        <%= page_entries_info @participants, :entry => 'participant' %>
+    </div>
+    <%= will_paginate @participants %>
+    
+    <table border="0" width="95%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+    	<tr>
+    		<td width="150px"><b><%= sort_link_helper('Roll Number', 'rollno') %></b></td>
+    		<td width="150px"><b><%= sort_link_helper('Category', 'category') %></b></td>
+    		<td><b><%= sort_link_helper('First Name', 'firstname') %></b></td>
+    		<td><b><%= sort_link_helper('Last Name', 'lastname') %></b></td>
+    		<td width="80px" align="right"><b><%= sort_link_helper('Age', 'age') %></b></td>
+    		<td width="100px" align="right"><b><%= sort_link_helper('In Gyan (yrs)', 'gyan') %></b></td>
+    		<td colspan="3">&nbsp;</td>
+    	</tr>
+    	<tr><td colspan="9"><hr style="margin: 0;"/></td></tr>
+    	<% for participant in @participants -%>
+    	<tr>
+    		<td><%= h(participant.rollno) %></td>
+    		<td><%= h(participant.category) %></td>
+    		<td><%= h(participant.first_name) %></td>
+    		<td><%= h(participant.last_name) %></td>
+    		<td align="right"><%= h(participant.age) %></td>
+    		<td align="right"><%= h(participant.in_gyan) %></td>
+    		<td width="50px" align="center"><%= link_to image_tag("view.png", :border => 0, :title => 'View Details'), {:action => 'show', :id => participant} %></td>
+    		<td width="50px" align="center"><%= link_to image_tag("edit.png", :border => 0, :title => 'Edit Details'), {:action => 'edit', :id => participant} %></td>
+    		<td width="50px" align="center"><%= link_to image_tag("delete.png", :border => 0, :title => 'Delete'), {:action => 'delete', :id => participant}, :confirm => 'Are you sure?' %></td>
+    	</tr>
+    	<% end -%>
+    </table>
+    
+    <br/><br/>
+    <%= will_paginate @participants %>
+<% else -%>
+    <center><br/><br/><h2>No participants listed</h2></center>
+<% end -%>
+
+<div id="composeMsg" class="compose" style="display:none;">
+	<p class="title">Upload Excel Sheet of Paticipants details</p><br/>
+	<div class="" id="replyStatus" name="replyStatus"></div>
+	<div class="" style="margin:0 0 20px 0;">
+		<input name="file" type="file" />
+	</div>
+	<p class="ar">
+		<input type="button" class="button" id="sendMsg" name="sendMsg" value="Upload" />
+		<input type="button" class="button ml20" id="closeMsg" name="closeMsg" value="Cancel" />
+	</p>
+</div>

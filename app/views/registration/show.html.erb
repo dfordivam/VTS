@@ -1,0 +1,101 @@
+<% content_for :title, "Registered" %>
+
+<% content_for :nav, "participants" %>
+
+<div class="header">Registration Details</div>
+
+<table border="0" width="90%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
+	<tr>
+		<td>Program Name</td>
+		<td colspan="3"><%= @registration.event.event_name %></td>
+	</tr>
+	<tr><td colspan="4"><br/><strong>Arrival Details of Participants to Madhuban</strong></td></tr>
+	<tr>
+		<td>Arrival Date</td>
+		<td><%= @registration.arrival_date.strftime('%d %B %Y') %></td>
+		<td>Mode of Travel</td>
+		<td>
+			<% @trains.each do |item| -%>
+				<% if item.id == @registration.arrival_by -%>
+					<%= item.trnno %>
+				<% end -%>
+			<% end -%>
+		</td>
+	</tr>
+	<tr>
+		<td>Guide Name</td>
+		<td><%= @registration.guide_name %></td>
+		<td>Stay Location</td>
+		<td><%= @registration.stay_location %></td>
+	</tr>
+</table>
+
+<table width="70%" border="0" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto;">
+	<tr><td colspan="5"><hr></td></tr>
+	<tr>
+		<td width="15%">&nbsp;</td>
+		<td width="15%">Brothers</td>
+		<td width="15%">Sisters</td>
+		<td width="15%">Teachers</td>
+		<td width="20%">Grand Total</td>
+	</tr>
+	<tr>
+		<td>BK</td>
+		<td><%= @registration.bkbro %></td>
+		<td><%= @registration.bksis %></td>
+		<td><%= @registration.bkteachers %></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>Non BK</td>
+		<td><%= @registration.nbkbro %></td>
+		<td><%= @registration.nbksis %></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>Total</td>
+		<td><%= @registration.bkbro + @registration.nbkbro %></td>
+		<td><%= @registration.bksis + @registration.nbksis %></td>
+		<td><%= @registration.bkteachers %></td>
+		<td><%= @registration.bkbro + @registration.nbkbro + @registration.bksis + @registration.nbksis + @registration.bkteachers %></td>
+	</tr>
+	<tr><td colspan="5"><hr></td></tr>
+</table>
+
+<table border="0" width="90%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
+	<tr>
+		<td colspan="6"><strong>Departure Details of Participants from Madhuban</strong><br/><br/></td>
+	</tr>
+	<tr>
+		<td>No. of Returns</td>
+		<td>Departure Date</td>
+		<td>Mode of Travel</td>
+		<td>Flight / Vehicle Number</td>
+		<td>Departure Time</td>
+	</tr>
+	<% @travel.each do |list| -%>
+	<tr>
+		<td><%= list.no_of_returns %></td>
+		<td><%= list.departure_date.strftime('%d %B %Y') %></td>
+		<td>
+			<% @trains.each do |item| -%>
+				<% if item.id == list.departure_by -%>
+					<%= item.trnno -%>
+				<% end -%>
+			<% end -%>
+		</td>
+		<td><%= list.vehicle_no %></td>
+		<td><%= list.departure_time %></td>
+	</tr>
+	<% end -%>
+    <tr><td colspan="5"><br/><hr><br/></td></tr>
+    <tr>
+        <td>Notes / Remarks</td>
+        <td colspan="4"><%= @registration.notes %></td>
+    </tr>
+</table>
+
+<br/><br/><br/>
+<p><%= link_to "&laquo; Back", {:action => 'list'}, :class => 'button' %></p>
+<br/><br/>

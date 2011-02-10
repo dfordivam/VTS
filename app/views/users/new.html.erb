@@ -1,0 +1,78 @@
+<% content_for :title, "Centre Accounts" %>
+
+<% content_for :nav, "users" %>
+
+<p class="ar"><%= link_to "Create New Centre &raquo;", account_path, :class => 'button' %></p>
+
+<p class="etitle">Create Centre Login Details</p>
+
+<% form_for @user do |f| %>
+
+	<table align="center" width="100%" cellspacing="5" cellpadding="2" style="margin: 0 auto;">
+		<tr><td align="center" colspan="2">&nbsp;<%= f.error_messages %>&nbsp;</td></tr>
+		<tr>
+			<td align="right" width="45%"><%= f.label :centre_id, "Choose Centre" %> :</td>
+			<td>
+				<select class="select" name="user[centre_id]">
+					<option value=""></option>
+					<% @centres.each do |centre| -%>
+						<option value="<%= centre.id %>"><%= centre.name %></option>
+					<% end -%>
+				</select>
+			</td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+			<td align="right" width="45%"><%= f.label :username %> :</td>
+			<td><%= f.text_field :username, :size => 32, :class => 'text' %></td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+			<td align="right"><%= f.label :password %> :</td>
+			<td><%= f.password_field :password, :size => 20, :class => 'text' %></td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+			<td align="right"><%= f.label :password_confirmation, "Confirm Password" %> :</td>
+			<td><%= f.password_field :password_confirmation, :size => 20, :class => 'text' %></td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr><td colspan="2" align="center"><%= f.submit "Submit", :class => 'button' %></td></tr>
+	</table>
+
+<% end -%>
+<br/><br/>
+<p class="etitle">List of centre accounts</p>
+<% if @centreslist -%>
+    <div class="header">
+        <%= page_entries_info @centreslist, :entry => 'centre' %>
+    </div>
+    <%= will_paginate @centreslist %>
+
+    <table class="highlight" border="0" width="95%" cellspacing="0" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+        <tr>
+            <td width="200px"><strong>Centre Name</strong></td>
+            <td width="150px"><strong>Centre Incharge</strong></td>
+            <td width="150px"><strong>Username</strong></td>
+            <td width="100px"><strong>Last logged</strong></td>
+            <td width="50px"><strong>Login Count</strong></td>
+            <td>&nbsp;</td>
+        </tr>
+        <% for user in @centreslist -%>
+            <tr class="record">
+                <td><%= h(user.centre.name)%></td>
+                <td><%= h(user.centre.incharge)%></td>
+                <td><%= h(user.username)%></td>
+                <% if user.last_login_at -%>
+                <td><%= h(user.last_login_at.strftime('%d/%m/%Y')) %></td>
+                <% else -%>
+                <td>Not logged in</td>
+                <% end -%>
+                <td align="center"><%= h(user.login_count) %></td>
+                <td width="50px" align="center"><%= link_to image_tag("delete.png", :border => 0, :title => 'Delete Centre Account'), {:action => 'delete', :id => user}, :confirm => 'Are you sure, you want to remove this centre account?' %></td>
+            </tr>
+        <% end -%>
+    </table>
+<% else -%>
+    <center><br/><br/><h2>No centres listed / active</h2></center>
+<% end -%>

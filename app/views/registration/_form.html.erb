@@ -1,0 +1,124 @@
+    <tr><td colspan="6"><br/><hr><br/></td></tr>
+    <tr>
+    	<td colspan="6">
+    		<strong>Select Participants from below list </strong> <span class="req">*</span>
+   			<% if @user.id != 1 && @user.centre_id != 4068 -%>
+				<p class="ar"><%= link_to "Create New Participant &raquo;", {:controller => 'participant', :action => 'new'}, :class => 'button' %></p>
+			<% end -%>
+		</td>
+	</tr>
+    <tr><td colspan="6" align="center"><img id="list_loader" src="/images/loaderbig.gif" alt="loader" width="48px" height="48px" style="display: none;" /></td></tr>
+    <tr><td colspan="6" id="list_here">
+	    <input type="hidden" id="valid_users_check" name="valid_users_check" value="<%=h @validate_users %>" />
+	    <% if @participants && @participants.length > 0 -%>
+	        <ul id="students_list" class="list">
+	            <% for participant in @participants -%>
+	                <li>
+	                    <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant) %>
+	                    <span><%= h(participant.first_name) %> <%= h(participant.middle_name) %> <%= h(participant.last_name) %></span>
+	                </li>
+	            <% end -%>
+	        </ul>
+	    <% else -%>
+	        <% if @user.id == 1 && @user.centre_id == 4068 -%>
+	            <center><p class="notify">No students listed. Please choose centre from "Centre Name" dropdown.</p></center>
+	        <% else %>
+	            <center><p class="notify">No students listed. Please add students by clicking on "Student Details" button.</p></center>
+	        <% end -%>
+	    <% end -%>
+    </td></tr>
+    <tr><td colspan="6"><br/><hr><br/></td></tr>
+	<tr><td colspan="4"><br/><strong>Arrival Details of Participants to Madhuban</strong> <span class="req">*</span></td></tr>
+	<tr>
+		<td>Arrival Date</td>
+		<td><input class="text" type="text" id="adate" name="registration[arrival_date]" size="30" value="<%= Time.new.strftime('%d %B %Y') %>" readonly="readonly"/></td>
+		<td>Mode of Travel</td>
+		<td>
+			<select class="select" id="transport" name="registration[arrival_by]" style="width: 150px;">
+				<option value="0"></option>
+				<% @trains.each do |item| %><option value="<%= item.id %>"><%= item.trnno %></option><% end %>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Guide Name</td>
+		<td><input class="text" id="guide" type="text" name="registration[guide_name]" size="30" maxlength="50" /></td>
+		<td>Stay Location</td>
+		<td>
+			<select class="select" name="registration[stay_location]" style="width: 150px;">
+				<option value="Shantivan" selected="selected">Shantivan</option>
+			</select>
+		</td>
+	</tr>
+	</table>
+	
+	<table width="70%" border="0" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto;">
+		<tr><td colspan="6"><hr></td></tr>
+		<tr>
+			<td width="15%">&nbsp;</td>
+			<td width="15%">Brothers</td>
+			<td width="15%">Sisters</td>
+			<td width="15%">Teachers</td>
+			<td width="20%">Grand Total</td>
+		</tr>
+		<tr>
+			<td>BK</td>
+			<td><input class="text numeric" type="text" size="4" name="registration[bkbro]" maxlength="4" id="registration_bk_bro" value="0" /></td>
+			<td><input class="text numeric" type="text" size="4" name="registration[bksis]" maxlength="4" id="registration_bk_sis" value="0" /></td>
+			<td><input class="text numeric" type="text" size="4" name="registration[bkteachers]" maxlength="4" id="registration_bk_teachers" value="0" /></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Non BK</td>
+			<td><input class="text numeric" type="text" size="4" name="registration[nbkbro]" maxlength="4" id="registration_nbk_bro" value="0" /></td>
+			<td><input class="text numeric" type="text" size="4" name="registration[nbksis]" maxlength="4" id="registration_nbk_sis" value="0" /></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Total</td>
+			<td><input class="text" type="text" size="4" readonly="readonly" id="registration_total_bro" value="0" /></td>
+			<td><input class="text" type="text" size="4" readonly="readonly" id="registration_total_sis" value="0" /></td>
+			<td><input class="text" type="text" size="4" readonly="readonly" id="registration_total_teachers" value="0" /></td>
+			<td>
+				<input class="text" type="text" size="4" readonly="readonly" id="registration_grand_total" value="0" />
+				<input type="hidden" size="4" name="registration[children]" id="registration_children" value="0" />
+			</td>
+		</tr>
+		<tr><td colspan="6"><hr></td></tr>
+	</table>
+	
+	<table border="0" width="90%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
+		<tr>
+			<td colspan="5"><strong>Departure Details of Participants from Madhuban</strong> <span class="req">*</span><br/><br/></td>
+		</tr>
+		<tr>
+			<td>No. of People Departing</td>
+			<td>Departure Date</td>
+			<td>Mode of Travel</td>
+			<td>Flight / Vehicle Number</td>
+			<td>Departure Time</td>
+		</tr>
+		<tr>
+			<td><input class="text returns" id="return-1" type="text" name="travel_info1[no_of_returns]" size="5" maxlength="4" /></td>
+			<td><input class="text" id="ddate-1" type="text" name="travel_info1[departure_date]" size="20" readonly="readonly" /></td>
+			<td><select class="select" id="depby-1" name="travel_info1[departure_by]" style="width: 120px;">
+					<option value="0"></option>
+					<% @trains.each do |item| %><option value="<%= item.id %>"><%= item.trnno %></option><% end %>
+			</select></td>
+			<td><input class="text" id="vehicle-1" type="text" name="travel_info1[vehicle_no]" size="10" maxlength="20" /></td>
+			<td>
+				<select class="select" id="time-1" name="travel_info1[departure_time]" style="width: 120px;">
+					<option value="Morning">Morning</option>
+					<option value="Afternoon">Afternoon</option>
+					<option value="Evening">Evening</option>
+				</select>
+			</td>
+		</tr>
+        <tr><td colspan="5"><br/><hr><br/></td></tr>
+        <tr>
+            <td>Notes / Remarks</td>
+            <td colspan="4"><%= text_area 'registration', 'notes', :cols => 50, :rows => 3, :class => "textarea", :style => "height: 90px;"  %></td>
+        </tr>
+        <tr><td colspan="5">&nbsp;</td></tr>
+ 

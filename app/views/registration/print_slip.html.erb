@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>VTS :: Registration Slip</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript">
+function init() {
+	window.print();
+}
+</script>
+<style type="text/css">
+body { font-size: 12px; font-family: Tahoma; }
+table tr td { font-size: 13px; }
+.f14 { font-size: 14px; }
+.ac { margin:0 auto; text-align:center;	}
+.ls { letter-spacing: 3px; }
+</style>
+</head>
+<body onload="init()">
+    <table border="0" width="400px" cellspacing="0" cellpadding="0" align="center" style="margin: 10px auto 0;">
+    	<tr><td><div class="ac ls f14">ACCOMMODATION OFFICE</div></td></tr>
+		<tr><td><div class="ac">Brahma Kumaris</div></td></tr>
+		<tr><td><div class="ac">Shantivan</div></td></tr>
+		<tr><td><div class="ac">Intercom : 3340</div></td></tr>
+		<tr><td><div class="ac">REGISTRATION SLIP</div></td></tr>
+    </table>
+	<% if @status != 'invalid' %>
+	<table border="0" width="400px" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto 0;">
+		<tr>
+			<td colspan="2" align="center"><strong>Reg. No : <%= h(@registration.id) %></strong><br/><br/></td>
+		</tr>
+		<tr>
+			<td width="80px">Reg. Date</td>
+			<td>: <%= h(@registration.arrival_date.strftime('%d %B %Y')) %></td>
+		</tr>
+		<tr>
+			<td width="80px">Centre Name</td>
+			<td>: <%= @registration.centre.name %></td>
+		</tr>
+            <td width="80px">Zone</td>
+            <td>: <%= h(@registration.centre.zone.name) %></td>
+        <tr>
+        </tr>
+		<tr>
+			<td width="80px">Guide Name</td>
+			<td>: <%= h(@registration.guide_name) %></td>
+		</tr>
+		<tr>
+			<td width="80px">Prg. Name</td>
+			<td>: <%= h(@registration.event.event_name) %></td>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
+	</table>
+	<table border="0" width="400px" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto;">
+		<tr>
+			<td width="25%">Brother</td>
+			<td width="25%">Sister</td>
+			<td width="25%">Teacher</td>
+			<td width="25%">Total</td>
+		</tr>
+		<tr><td colspan="4"><hr/></td></tr>
+		<tr>
+			<td width="25%"><%= @registration.bkbro + @registration.nbkbro %></td>
+			<td width="25%"><%= @registration.bksis + @registration.nbksis %></td>
+			<td width="25%"><%= @registration.bkteachers %></td>
+			<td width="25%"><%= @registration.bkteachers + @registration.bkbro + @registration.bksis + @registration.nbkbro + @registration.nbksis + @registration.children %></td>
+		</tr>
+		<tr><td colspan="4"><hr/></td></tr>
+		<tr><td colspan="4">Accommodation Department<br/><br/></td></tr>
+		<tr><td colspan="4"><br/><hr/></td></tr>
+	</table>
+	<% end %>
+</body>
+</html>

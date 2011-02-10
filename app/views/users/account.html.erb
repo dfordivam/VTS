@@ -1,0 +1,49 @@
+<% content_for :title, "New Centre Account" %>
+
+<% content_for :nav, "users" %>
+
+<div class="header">New Centre Details</div>
+
+<% form_tag '/users/account' do -%>
+
+	<table border="0" width="85%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+		<tr><td colspan="4" align="right"><span class="req">*</span> Indicates Required Field</td></tr>
+		<tr>
+			<td align="right"><span class="req">*</span> Zone Name :</td>
+			<td>
+				<select class="select" name="centre[zone_id]">
+					<option value=""></option>
+					<% @zones.each do |zone| -%>
+					<option value="<%= zone.id %>">
+					<%= zone.name %></option> <% end -%>
+				</select>
+			</td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+			<td align="right">Centre Type :</td>
+			<td>
+				<%= select 'centre', 'centre_type', ["Centre", "Sub Centre", "Geetha Patashala"], {}, {:class => "select"} %>
+			</td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+			<td align="right"><span class="req">*</span> Centre Name :</td>
+			<td><%= text_field 'centre', 'name', :size => 30, :maxlength => 64, :class => "text" %></td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+			<td align="right"><span class="req">*</span> Centre Incharge :</td>
+			<td><%= text_field 'centre', 'incharge', :size => 30, :maxlength => 64, :class => "text" %></td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr>
+			<td colspan="2" align="center">
+				<%= submit_tag "Create", :class => 'button' %>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<%= link_to "Cancel", {:action => 'new'}, :class => 'button' %>
+			</td>
+		</tr>
+	</table>
+
+<% end -%>
