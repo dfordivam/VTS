@@ -103,5 +103,7 @@
 </table>
 
 <br/><br/><br/>
-<p><%= link_to "&laquo; Back", {:action => 'list'}, :class => 'button' %></p>
+<% if @user.id != 1 || @user.centre_id != 4068 -%>
+  <p><%= link_to "&laquo; Back", {:action => 'list'}, :class => 'button' %></p>
+<% end %>
 <br/><br/>

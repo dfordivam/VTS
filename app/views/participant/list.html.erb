@@ -2,11 +2,13 @@
 
 <% content_for :nav, "contacts" %>
 
-<div style="width: 95%; margin: 0 auto 10px;">
-	<div class="fl al"><%= link_to "Create New Participant &raquo;", {:action => 'new'}, :class => 'button' %></div>
-	<div class="fr ar"></div>
-	<div class="clr"></div>
-</div>
+<% if @user.id != 1 || @user.centre_id != 4068 -%>
+  <div style="width: 95%; margin: 0 auto 10px;">
+    <div class="fl al"><%= link_to "Create New Participant &raquo;", {:action => 'new'}, :class => 'button' %></div>
+    <div class="fr ar"></div>
+    <div class="clr"></div>
+  </div>
+<% end %>
 
 <% if @participants -%>
     <div class="header">
@@ -34,8 +36,10 @@
     		<td align="right"><%= h(participant.age) %></td>
     		<td align="right"><%= h(participant.in_gyan) %></td>
     		<td width="50px" align="center"><%= link_to image_tag("view.png", :border => 0, :title => 'View Details'), {:action => 'show', :id => participant} %></td>
-    		<td width="50px" align="center"><%= link_to image_tag("edit.png", :border => 0, :title => 'Edit Details'), {:action => 'edit', :id => participant} %></td>
-    		<td width="50px" align="center"><%= link_to image_tag("delete.png", :border => 0, :title => 'Delete'), {:action => 'delete', :id => participant}, :confirm => 'Are you sure?' %></td>
+                <% if @user.id != 1 || @user.centre_id != 4068 -%>
+                  <td width="50px" align="center"><%= link_to image_tag("edit.png", :border => 0, :title => 'Edit Details'), {:action => 'edit', :id => participant} %></td>
+                  <td width="50px" align="center"><%= link_to image_tag("delete.png", :border => 0, :title => 'Delete'), {:action => 'delete', :id => participant}, :confirm => 'Are you sure?' %></td>
+                <% end %>
     	</tr>
     	<% end -%>
     </table>

@@ -71,7 +71,8 @@
 		<td><%= @registration.bkteachers %></td>
 		<td><%= @registration.bkbro + @registration.nbkbro + @registration.bksis + @registration.nbksis + @registration.bkteachers %></td>
 	</tr>
-	<tr><td colspan="5"><hr></td></tr>
+        <tr><td colspan="5"><hr></td></tr>
+        <tr><td width="50px" align="center"><%= link_to "List of Participants", {:action => 'list', :controller => :participant , :id => @registration } %></td></tr>
 </table>
 
 <table border="0" width="90%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
