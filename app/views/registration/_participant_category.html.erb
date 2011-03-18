@@ -1,9 +1,13 @@
 <% for participant in participant_category -%>
-  <li>
-  <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant), :onclick => 
-  "update_count(this,#{registration_count})" %>
-
-  <span><%= h(participant.first_name) %> <%= h(participant.middle_name) %> <%= h(participant.last_name) %></span>
-  </li>
+  <table >
+    <tr class= "<%= cycle('list_line_odd', 'list_line_even') %>"  ><td>
+        <li><td>
+          <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant), :onclick => 
+          "update_count(this,#{registration_count})" %></td>
+        <td><%= h(participant.first_name) %> <%= h(participant.middle_name) %> <%= h(participant.last_name) %></td>
+        <td><b>Age:</b> <%=  h(participant.age)%> </td>
+        </li>
+    </td></tr>
+  </table>
 <%end %>
 
