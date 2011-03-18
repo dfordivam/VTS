@@ -1,3 +1,12 @@
+<script type="text/javascript">
+  function update_count(){
+    $(registration_total_bro).value = parseInt($(registration_bk_bro).value) + parseInt($(registration_nbk_bro).value);
+    $(registration_total_sis).value = parseInt($(registration_bk_sis).value) + parseInt($(registration_nbk_sis).value);
+    $(registration_total_teachers).value = parseInt($(registration_bk_teachers).value) ;
+    $(registration_grand_total).value = parseInt($(registration_total_teachers).value) + parseInt($(registration_total_bro).value) + parseInt($(registration_total_sis).value) ;
+  }
+</script>
+
 <% if @user.id != 1 || @user.centre_id != 4068 -%> 
   <div id="select_participant" >
     <tr><td colspan="6"><br/><hr><br/></td></tr>
@@ -12,41 +21,50 @@
 
     <tr><td colspan="6" align="center"><img id="list_loader" src="/images/loaderbig.gif" alt="loader" width="48px" height="48px" style="display: none;" /></td></tr>
     <tr><td>
+        Teachers
         <div id="participant_category_div_teacher" >
           <%= link_to_function ("Show Teachers", nil) do |page|
-            page[:participant_category_div_teacher].replace_html :partial => "participant_category" , :object => @participants_teachers
+            page[:participant_category_div_teacher].replace_html :partial => "participant_category" , :object => @participants_teachers, :locals => { :registration_count => 'registration_bk_teachers' }
           end
           %> &nbsp;&nbsp;
         </div>
     </td></tr>
+    <tr><td colspan="6"><br/><hr><br/></td></tr>
     <tr><td>
+        BK Brothers
         <div id="participant_category_div_bk_bro" >
           <%= link_to_function ("Show BK Brothers", nil) do |page|
-            page[:participant_category_div_bk_bro].replace_html :partial => "participant_category" , :object => @participants_bk_bro
+            page[:participant_category_div_bk_bro].replace_html :partial => "participant_category" , :object => @participants_bk_bro , :locals => { :registration_count => 'registration_bk_bro'  }
           end
           %> &nbsp;&nbsp;
         </div>
     </td></tr>
+    <tr><td colspan="6"><br/><hr><br/></td></tr>
     <tr><td>
+        BK Sisters
         <div id="participant_category_div_bk_sis" >
           <%= link_to_function ("Show BK Sisters", nil) do |page|
-            page[:participant_category_div_bk_sis].replace_html :partial => "participant_category" , :object => @participants_bk_sis
+            page[:participant_category_div_bk_sis].replace_html :partial => "participant_category" , :object => @participants_bk_sis , :locals => { :registration_count => 'registration_bk_sis' }
           end
           %> &nbsp;&nbsp;
         </div>
     </td></tr>
+    <tr><td colspan="6"><br/><hr><br/></td></tr>
     <tr><td>
+        Non-BK Brothers
         <div id="participant_category_div_nbk_bro" >
           <%= link_to_function ("Show Non-BK Brothers", nil) do |page|
-            page[:participant_category_div_nbk_bro].replace_html :partial => "participant_category" , :object => @participants_nbk_bro
+            page[:participant_category_div_nbk_bro].replace_html :partial => "participant_category" , :object => @participants_nbk_bro, :locals => { :registration_count => 'registration_nbk_bro' }
           end
           %> &nbsp;&nbsp;
         </div>
     </td></tr>
+    <tr><td colspan="6"><br/><hr><br/></td></tr>
     <tr><td>
+        Non-BK Sisters
         <div id="participant_category_div_nbk_sis" >
           <%= link_to_function ("Show Non-BK Sisters", nil) do |page|
-            page[:participant_category_div_nbk_sis].replace_html :partial => "participant_category" , :object => @participants_nbk_sis
+            page[:participant_category_div_nbk_sis].replace_html :partial => "participant_category" , :object => @participants_nbk_sis, :locals => { :registration_count => 'registration_nbk_sis' }
           end
           %> &nbsp;&nbsp;
         </div>
@@ -89,15 +107,15 @@
 		</tr>
 		<tr>
 			<td>BK</td>
-			<td><input class="text numeric" type="text" size="4" name="registration[bkbro]" maxlength="4" id="registration_bk_bro" value="0" /></td>
-			<td><input class="text numeric" type="text" size="4" name="registration[bksis]" maxlength="4" id="registration_bk_sis" value="0" /></td>
-			<td><input class="text numeric" type="text" size="4" name="registration[bkteachers]" maxlength="4" id="registration_bk_teachers" value="0" /></td>
+                        <td> <input class="text numeric" type="text" size="4" readonly="readonly" name="registration[bkbro]" maxlength="4" id="registration_bk_bro" value="0" /> </td>
+			<td><input class="text numeric" type="text" size="4" readonly="readonly" name="registration[bksis]" maxlength="4" id="registration_bk_sis" value="0" /></td>
+			<td><input class="text numeric" type="text" size="4" readonly="readonly" name="registration[bkteachers]" maxlength="4" id="registration_bk_teachers" value="0" /></td>
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
 			<td>Non BK</td>
-			<td><input class="text numeric" type="text" size="4" name="registration[nbkbro]" maxlength="4" id="registration_nbk_bro" value="0" /></td>
-			<td><input class="text numeric" type="text" size="4" name="registration[nbksis]" maxlength="4" id="registration_nbk_sis" value="0" /></td>
+			<td><input class="text numeric" type="text" size="4" readonly="readonly" name="registration[nbkbro]" maxlength="4" id="registration_nbk_bro" value="0" /></td>
+			<td><input class="text numeric" type="text" size="4" readonly="readonly" name="registration[nbksis]" maxlength="4" id="registration_nbk_sis" value="0" /></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 		</tr>
