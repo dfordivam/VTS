@@ -11,4 +11,8 @@ module ParticipantHelper
     link_to(text, options, html_options)
   end
 
+  def is_bk(bk_flag)
+    bk_flag == true ? "YES" : "NO"
+
+  end  
 end

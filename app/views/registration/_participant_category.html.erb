@@ -1,7 +1,7 @@
 <% for participant in participant_category -%>
   <li>
   <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant), :onclick => 
-  "if($(this).checked) {$(#{registration_count}).value = parseInt($(#{registration_count}).value) + 1 } else {$(#{registration_count}).value = parseInt($(#{registration_count}).value) - 1}; update_count();" %>
+  "update_count(this,#{registration_count})" %>
 
   <span><%= h(participant.first_name) %> <%= h(participant.middle_name) %> <%= h(participant.last_name) %></span>
   </li>

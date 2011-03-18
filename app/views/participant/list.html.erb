@@ -20,6 +20,7 @@
     	<tr>
     		<td width="150px"><b><%= sort_link_helper('Roll Number', 'rollno') %></b></td>
     		<td width="150px"><b><%= sort_link_helper('Category', 'category') %></b></td>
+    		<td width="150px"><b><%= sort_link_helper('Is BK?', 'is_bk') %></b></td>
     		<td><b><%= sort_link_helper('First Name', 'firstname') %></b></td>
     		<td><b><%= sort_link_helper('Last Name', 'lastname') %></b></td>
     		<td width="80px" align="right"><b><%= sort_link_helper('Age', 'age') %></b></td>
@@ -31,6 +32,7 @@
     	<tr>
     		<td><%= h(participant.rollno) %></td>
     		<td><%= h(participant.category) %></td>
+    		<td><%= h(is_bk(participant.is_bk)) %></td>
     		<td><%= h(participant.first_name) %></td>
     		<td><%= h(participant.last_name) %></td>
     		<td align="right"><%= h(participant.age) %></td>
