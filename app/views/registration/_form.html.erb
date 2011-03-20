@@ -15,7 +15,7 @@
     <tr><td>
         Teachers
         <div id="participant_category_div_teacher" >
-          <%= link_to_function ("Show Teachers", nil) do |page|
+          <%= link_to_function("Show Teachers", nil) do |page|
             page[:participant_category_div_teacher].replace_html :partial => "participant_category" , :object => @participants_teachers, :locals => { :registration_count => 'registration_bk_teachers' }
           end
           %> &nbsp;&nbsp;
@@ -25,7 +25,7 @@
     <tr><td>
         BK Brothers
         <div id="participant_category_div_bk_bro" >
-          <%= link_to_function ("Show BK Brothers", nil) do |page|
+          <%= link_to_function("Show BK Brothers", nil) do |page|
             page[:participant_category_div_bk_bro].replace_html :partial => "participant_category" , :object => @participants_bk_bro , :locals => { :registration_count => 'registration_bk_bro'  }
           end
           %> &nbsp;&nbsp;
@@ -35,7 +35,7 @@
     <tr><td>
         BK Sisters
         <div id="participant_category_div_bk_sis" >
-          <%= link_to_function ("Show BK Sisters", nil) do |page|
+          <%= link_to_function("Show BK Sisters", nil) do |page|
             page[:participant_category_div_bk_sis].replace_html :partial => "participant_category" , :object => @participants_bk_sis , :locals => { :registration_count => 'registration_bk_sis' }
           end
           %> &nbsp;&nbsp;
@@ -45,7 +45,7 @@
     <tr><td>
         Non-BK Brothers
         <div id="participant_category_div_nbk_bro" >
-          <%= link_to_function ("Show Non-BK Brothers", nil) do |page|
+          <%= link_to_function("Show Non-BK Brothers", nil) do |page|
             page[:participant_category_div_nbk_bro].replace_html :partial => "participant_category" , :object => @participants_nbk_bro, :locals => { :registration_count => 'registration_nbk_bro' }
           end
           %> &nbsp;&nbsp;
@@ -55,7 +55,7 @@
     <tr><td>
         Non-BK Sisters
         <div id="participant_category_div_nbk_sis" >
-          <%= link_to_function ("Show Non-BK Sisters", nil) do |page|
+          <%= link_to_function("Show Non-BK Sisters", nil) do |page|
             page[:participant_category_div_nbk_sis].replace_html :partial => "participant_category" , :object => @participants_nbk_sis, :locals => { :registration_count => 'registration_nbk_sis' }
           end
           %> &nbsp;&nbsp;
