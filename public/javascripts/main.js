@@ -17,7 +17,7 @@ $(document).ready(function(){
         yearRange: '-100:+0',
         dateFormat: 'dd MM yy'
     });
-    
+   
     $("#adate, #ddate-1").datepicker({
         minDate: 0,
         dateFormat: 'dd MM yy',
@@ -382,8 +382,8 @@ function checkTotal(id){
 
 function customRange(input){
     return {
-        minDate: (input.id == "ddate-1" ? $("#adate").datepicker("getDate") : null),
-        maxDate: (input.id == "adate" ? $("#ddate-1").datepicker("getDate") : null)
+        minDate: (input.id == "ddate-1" ? $.datepicker.parseDate('yy-mm-dd',$("#event").attr('value').split(',')[1] ) : null),
+        maxDate: (input.id == "adate" ? $.datepicker.parseDate('yy-mm-dd',$("#event").attr('value').split(',')[1] ) : null)
     };
 }
 

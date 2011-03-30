@@ -28,7 +28,7 @@
 				<select class="select" id="event" name="registration[event_id]" style="width: 370px;" >
 					<option value="0"></option>
 					<% @events.each do |event| -%>
-						<option value="<%= event.id %>"><%= event.event_name %></option>
+						<option value="<%= event.id %>,<%= event.event_date %>"><%= event.event_name %></option>
 					<% end -%>
 				</select>
 			</td>

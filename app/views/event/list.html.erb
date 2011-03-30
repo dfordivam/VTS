@@ -14,6 +14,7 @@
         <tr>
             <td width="150px"><strong>Event Name</strong></td>
             <td width="120px"><strong>Wing Name</strong></td>
+            <td width="100px"><strong>Event Date</strong></td>
             <td width="100px"><strong>Start Date</strong></td>
             <td width="100px"><strong>End Date</strong></td>
             <td width="80px"><strong>Location</strong></td>
@@ -26,6 +27,7 @@
     		<tr class="record">
     			<td align="left"><%= h(event.event_name)%></td>
     			<td align="left"><%= h(event.wing_name)%></td>
+    			<td align="left"><%= h(event.event_date.strftime('%d %B %Y')) %></td>
     			<td align="left"><%= h(event.start_date.strftime('%d %B %Y')) %></td>
     			<td align="left"><%= h(event.end_date.strftime('%d %B %Y')) %></td>
                 <td align="left"><%= h(event.location)%></td>
