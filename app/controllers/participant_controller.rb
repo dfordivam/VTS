@@ -25,7 +25,7 @@ class ParticipantController < ApplicationController
       when "lastname"  then "last_name"
       when "age"       then "age"
       when "gyan"      then "in_gyan"
-    else "rollno"
+    else "id"
     end
     if @user.id == 1 && @user.centre_id == 4068 && params[:id] != nil
       @registration = Registration.find(params[:id])
