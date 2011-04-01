@@ -27,7 +27,7 @@
     		<tr class="record">
     			<td align="left"><%= h(event.event_name)%></td>
     			<td align="left"><%= h(event.wing_name)%></td>
-    			<td align="left"><%= h(event.event_date.strftime('%d %B %Y')) %></td>
+    			<td align="left"><%= event.event_date ? h(event.event_date.strftime('%d %B %Y')): 'NA' %></td>
     			<td align="left"><%= h(event.start_date.strftime('%d %B %Y')) %></td>
     			<td align="left"><%= h(event.end_date.strftime('%d %B %Y')) %></td>
                 <td align="left"><%= h(event.location)%></td>
