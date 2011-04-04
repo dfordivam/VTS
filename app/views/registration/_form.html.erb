@@ -4,21 +4,30 @@
     <tr><td colspan="6"><br/><hr><br/></td></tr>
     <tr>
       <td colspan="6">
-        <strong>Select Participants from below list </strong> <span class="req">*</span>
-        <% if @user.id != 1 && @user.centre_id != 4068 -%>
-          <p class="ar"><%= link_to "Create New Participant &raquo;", {:controller => 'participant', :action => 'new'}, :class => 'button' %></p>
-        <% end -%>
+      <strong>Select Participants from below list </strong> <span class="req">*</span>
+      <% if @user.id != 1 && @user.centre_id != 4068 -%>
+      <p class="ar"><%= link_to "Create New Participant &raquo;", {:controller => 'participant', :action => 'new'}, :class => 'button' %></p>
+      <% end -%>
       </td>
-    </tr>
+      </tr>
 
-    <tr><td colspan="6" align="center"><img id="list_loader" src="/images/loaderbig.gif" alt="loader" width="48px" height="48px" style="display: none;" /></td></tr>
-    <tr><td>
-        Teachers
-        <div id="participant_category_div_teacher" >
-          <% render  :partial => "participant_category" , :object => @participants_teachers, 
-            :locals => { :registration_count => 'registration_bk_teachers' }
-          %>
-        </div>
+      <tr><td colspan="6" align="center"><img id="list_loader" src="/images/loaderbig.gif" alt="loader" width="48px" height="48px" style="display: none;" /></td></tr>
+      <tr><td>
+      Teachers
+      <div id="participant_category_div_teacher" >
+      <% for participant in @participants_teachers -%>
+        <table >
+            <tr class= "<%= cycle('list_line_odd', 'list_line_even') %>"  ><td>
+      <li><td>
+      <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant), :onclick =>
+      "update_count(this, registration_bk_teachers)" %></td>
+      <td><%= h(participant.first_name) %> <%= h(participant.middle_name) %> <%= h(participant.last_name) %></td>
+      <td><b>Age:</b> <%=  h(participant.age)%> </td>
+      </li>
+      </td></tr>
+      </table>
+      <%end %>
+      </div>
     </td></tr>
     <tr><td colspan="6"><br/><hr><br/></td></tr>
     <tr><td>
