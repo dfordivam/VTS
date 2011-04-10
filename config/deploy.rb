@@ -27,29 +27,16 @@ role :db,  "ip-10-243-73-132.ec2.internal", :primary => true # This is where Rai
      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
    end
 
-  task :config_database_yml, :roles => :app do
-    run <<-CMD
-      ln -nfs /home/bitnami/servers/VTS.git/shared/system/database.yml /home/bitnami/servers/VTS.git/current/config/database.yml
-    CMD
-  end
-  task :config_production_rb, :roles => :app do
-    run <<-CMD
-      ln -nfs /home/bitnami/servers/VTS.git/shared/system/production.rb /home/bitnami/servers/VTS.git/current/config/environments/production.rb
-    CMD
-  end
-
  end
 
-
-namespace :customs do
+ namespace :custom_code do
   task :config_database_yml, :roles => :app do
-    run <<-CMD
-      ln -nfs /home/bitnami/servers/VTS.git/shared/system/database.yml /home/bitnami/servers/VTS.git/current/config/database.yml
-    CMD
+     run  "ln -nfs /home/bitnami/servers/VTS.git/shared/system/database.yml /home/bitnami/servers/VTS.git/current/config/database.yml"
   end
   task :config_production_rb, :roles => :app do
-    run <<-CMD
-      ln -nfs /home/bitnami/servers/VTS.git/shared/system/production.rb /home/bitnami/servers/VTS.git/current/config/environments/production.rb
-    CMD
+     run "ln -nfs /home/bitnami/servers/VTS.git/shared/system/production.rb /home/bitnami/servers/VTS.git/current/config/environments/production.rb"
   end
-end
+ end
+
+after "deploy:update_code", "custom_code:config_database_yml"
+after "deploy:update_code", "custom_code:config_production_rb"
