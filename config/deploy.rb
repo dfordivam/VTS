@@ -38,5 +38,5 @@ role :db,  "ip-10-243-73-132.ec2.internal", :primary => true # This is where Rai
   end
  end
 
-after "deploy:update_code", "custom_code:config_database_yml"
-after "deploy:update_code", "custom_code:config_production_rb"
+after "deploy:symlink", "custom_code:config_database_yml"
+after "deploy:symlink", "custom_code:config_production_rb"
