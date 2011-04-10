@@ -26,20 +26,30 @@ role :db,  "ip-10-243-73-132.ec2.internal", :primary => true # This is where Rai
    task :restart, :roles => :app, :except => { :no_release => true } do
      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
    end
- end
 
-shared_path = "/home/bitnami/servers/VTS.git/shared"
-release_path = "/home/bitnami/servers/VTS.git/current"
-
-namespace :customs do
   task :config_database_yml, :roles => :app do
     run <<-CMD
-      ln -nfs #{shared_path}/system/database.yml #{release_path}/config/database.yml
+      ln -nfs /home/bitnami/servers/VTS.git/shared/system/database.yml /home/bitnami/servers/VTS.git/current/config/database.yml
     CMD
   end
   task :config_production_rb, :roles => :app do
     run <<-CMD
-      ln -nfs #{shared_path}/system/production.rb #{release_path}/config/environments/production.rb
+      ln -nfs /home/bitnami/servers/VTS.git/shared/system/production.rb /home/bitnami/servers/VTS.git/current/config/environments/production.rb
+    CMD
+  end
+
+ end
+
+
+namespace :customs do
+  task :config_database_yml, :roles => :app do
+    run <<-CMD
+      ln -nfs /home/bitnami/servers/VTS.git/shared/system/database.yml /home/bitnami/servers/VTS.git/current/config/database.yml
+    CMD
+  end
+  task :config_production_rb, :roles => :app do
+    run <<-CMD
+      ln -nfs /home/bitnami/servers/VTS.git/shared/system/production.rb /home/bitnami/servers/VTS.git/current/config/environments/production.rb
     CMD
   end
 end
