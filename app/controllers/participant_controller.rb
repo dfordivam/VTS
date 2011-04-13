@@ -63,7 +63,8 @@ class ParticipantController < ApplicationController
         @participant.address = @address
         @participant.contact = @contact
         
-        no = Participant.count(:conditions => ["centre_id = ?", current_user.centre_id])
+        last_participant = Participant.last(:conditions => ["centre_id = ?", current_user.centre_id])
+        no = last_participant.rollno.split('-')[1]
         rollno = no.to_i + 1
         @participant.rollno = "#{@user.centre.id}-#{rollno}"
         
