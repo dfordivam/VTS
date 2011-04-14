@@ -1,6 +1,6 @@
 class ParticipantController < ApplicationController
   require 'will_paginate'
-  
+  require 'spreadsheet'
   before_filter :authorize
   
   def index
@@ -136,5 +136,134 @@ class ParticipantController < ApplicationController
       render :json => {:status => false}.to_json
     end
   end
-  
+
+  def uploadexcel
+    excel_file = params[:upload_excel][:excel_file]
+    content_type = excel_file.content_type.chomp
+    if (content_type == "application/vnd.ms-excel")
+    file_name = excel_file.original_filename
+    path_to_file = _save_file( excel_file ,  file_name)
+    @participants = _extract_data_from_file(path_to_file)
+    else
+     # redirect_to error page
+    end
+    if (false) 
+        File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'w') do |file|
+          file.write(uploaded_io.read)
+        end
+        @user     = current_user
+        book = Spreadsheet.open("public/uploads/#{uploaded_io.original_filename}", "r")
+        sheet1 = book.worksheet 0
+        sheet1.each_with_index  do |row, index|
+        puts row.length
+        puts index
+        if index > 0
+        @participant = Participant.new()
+        @contact = Contact.new()
+        @address  = Address.new()
+        @participant.centre_id = @user.centre_id
+        row.each_with_index do |column,column_index|
+#puts column
+        puts column_index
+        if column_index == 0
+        @participant.category = column
+        elsif column_index == 1
+        @participant.first_name = column
+        elsif column_index == 2
+        @participant.last_name = column
+        elsif column_index == 3
+        @participant.is_bk = true
+        elsif column_index == 4
+        @participant.age = column
+        elsif column_index == 5
+        @address.addr1 = column
+        elsif column_index == 6
+        @address.city = column
+        elsif column_index == 7
+        @address.state = column
+        elsif column_index == 8
+        @address.pincode = column.to_i
+        elsif column_index == 9
+        @address.country = column
+        elsif column_index == 10
+        @participant.in_gyan = column
+        elsif column_index == 11
+        @participant.in_purity = column
+        elsif column_index == 12
+        @participant.in_food = column
+        elsif column_index == 13
+        @participant.in_murli = column
+        elsif column_index == 14
+        @participant.nationality = column
+        end
+        end
+#        if @address.save
+#        if @contact.save
+        @participant.address = @address
+        @participant.contact = @contact
+
+        no = Participant.count(:conditions => ["centre_id = ?", current_user.centre_id])
+        rollno = no.to_i + 1
+        @participant.rollno = "#{@user.centre.id}-#{rollno}"
+        @participant.middle_name = ""
+#        @participant.save
+#        else
+#        @address.destroy
+#        end
+#        end
+
+
+#raise @participant.inspect
+        end
+        end
+
+#puts "Excel Upload"
+#        redirect_to :action => 'list'
+
+     end
+  end
+
+private
+
+  def _save_file(filepath, original_name)
+    directory = "public/uploads/participant_excel_files"
+    # create the file path
+    path = File.join(directory,original_name)
+    # write the file
+    File.open(path, "wb") { |f| f.write(filepath.read) }
+    return path
+  end
+
+  def _extract_data_from_file(path_to_file)
+    book = Spreadsheet.open path_to_file
+    @sheet1 = book.worksheet 0
+    first_row = @sheet1.row(0)
+    participants = []
+    if (_check_first_row(first_row))
+      @sheet1.each 1 do |row|
+        participants.insert(-1,_add_data_to_db(row))
+      end
+    else
+      redirect_to(:error)
+    end
+    return participants
+  end  
+
+  def _check_first_row(first_row)
+#    Gold = ["First Name", "Last Name", "Gender", "Center Name", "City"]
+#    if (first_row == Gold)
+      return true
+#    else
+#      return false
+#    end
+  end
+
+  def _add_data_to_db(row)
+    participant = Participant.new
+    participant.category = row[0]
+    participant.first_name = row[1]
+    participant.last_name = row[2]
+    participant.last_name = row[2]
+    participant
+  end
 end
