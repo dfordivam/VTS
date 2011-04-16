@@ -256,7 +256,7 @@ class RegistrationController < ApplicationController
           sheet1.row(i).insert 5, "#{addr}"
           sheet1.row(i).insert 6, "#{@registration.arrival_date.strftime('%d-%m-%Y')}"
           if @travel
-            sheet1.row(i).insert 7, "#{@travel.departure_date.strftime('%m-%d-%Y')}"
+            sheet1.row(i).insert 7, "#{@travel.departure_date.strftime('%d-%m-%Y')}"
           end
           if @train
             sheet1.row(i).insert 8, "#{@train.trnno}"
