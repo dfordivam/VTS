@@ -143,84 +143,16 @@ class ParticipantController < ApplicationController
     if (content_type == "application/vnd.ms-excel")
     file_name = excel_file.original_filename
     path_to_file = _save_file( excel_file ,  file_name)
-    @participants = _extract_data_from_file(path_to_file)
+    @collections = _extract_data_from_file(path_to_file)
+    @participants_1 = []
+    @collections.each_with_index do |collection, index| 
+      @participants_1[index] = collection[:participant]
+    end
+    items_per_page = 10
+    @participants = @participants_1.paginate  :per_page => items_per_page, :page => params[:page]
     else
      # redirect_to error page
     end
-    if (false) 
-        File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'w') do |file|
-          file.write(uploaded_io.read)
-        end
-        @user     = current_user
-        book = Spreadsheet.open("public/uploads/#{uploaded_io.original_filename}", "r")
-        sheet1 = book.worksheet 0
-        sheet1.each_with_index  do |row, index|
-        puts row.length
-        puts index
-        if index > 0
-        @participant = Participant.new()
-        @contact = Contact.new()
-        @address  = Address.new()
-        @participant.centre_id = @user.centre_id
-        row.each_with_index do |column,column_index|
-#puts column
-        puts column_index
-        if column_index == 0
-        @participant.category = column
-        elsif column_index == 1
-        @participant.first_name = column
-        elsif column_index == 2
-        @participant.last_name = column
-        elsif column_index == 3
-        @participant.is_bk = true
-        elsif column_index == 4
-        @participant.age = column
-        elsif column_index == 5
-        @address.addr1 = column
-        elsif column_index == 6
-        @address.city = column
-        elsif column_index == 7
-        @address.state = column
-        elsif column_index == 8
-        @address.pincode = column.to_i
-        elsif column_index == 9
-        @address.country = column
-        elsif column_index == 10
-        @participant.in_gyan = column
-        elsif column_index == 11
-        @participant.in_purity = column
-        elsif column_index == 12
-        @participant.in_food = column
-        elsif column_index == 13
-        @participant.in_murli = column
-        elsif column_index == 14
-        @participant.nationality = column
-        end
-        end
-#        if @address.save
-#        if @contact.save
-        @participant.address = @address
-        @participant.contact = @contact
-
-        no = Participant.count(:conditions => ["centre_id = ?", current_user.centre_id])
-        rollno = no.to_i + 1
-        @participant.rollno = "#{@user.centre.id}-#{rollno}"
-        @participant.middle_name = ""
-#        @participant.save
-#        else
-#        @address.destroy
-#        end
-#        end
-
-
-#raise @participant.inspect
-        end
-        end
-
-#puts "Excel Upload"
-#        redirect_to :action => 'list'
-
-     end
   end
 
 private
@@ -241,29 +173,66 @@ private
     participants = []
     if (_check_first_row(first_row))
       @sheet1.each 1 do |row|
-        participants.insert(-1,_add_data_to_db(row))
+        participants.insert(-1,_retrieve_data(row))
       end
     else
-      redirect_to(:error)
+      return first_row
+#      redirect_to(:error)
     end
     return participants
   end  
 
   def _check_first_row(first_row)
-#    Gold = ["First Name", "Last Name", "Gender", "Center Name", "City"]
-#    if (first_row == Gold)
+    gold = ["Category","First Name", "Last Name" , "BK", "Age", "Address", "City", "State", "Country", "Years in Gyan", "Observing Purity (Years)", "Purity of Food (Years)", "Attending Murli Class (Years)","Profession (Optional)", "Mobile (Optional)"]
+    if (first_row == gold)
       return true
-#    else
-#      return false
-#    end
+    else
+      return false
+    end
   end
 
-  def _add_data_to_db(row)
+  def _retrieve_data(row)
     participant = Participant.new
-    participant.category = row[0]
+    address = Address.new
+    contact = Contact.new
+    participant.category = _check_category(row[0])
     participant.first_name = row[1]
     participant.last_name = row[2]
-    participant.last_name = row[2]
-    participant
+    participant.is_bk = _check_is_bk(row[3])
+    participant.age = row[4]
+    address.addr1 = row[5]
+    address.city = row[6]
+    address.state = row[7]
+    address.country = row[8]
+    participant.in_gyan = row[9]
+    participant.in_purity = row[10]
+    participant.in_food = row[11]
+    participant.in_murli = row[12]
+    participant.profession = row[13]
+    contact.mobile = row[14]
+    participant.rollno = "1"
+    return {:participant => participant, :address => address, :contact => contact}
   end
+
+  def _check_category(category)
+    if (category.downcase == "brother" || category.downcase == "bro")
+      return "Brother"
+    elsif (category.downcase == "sister" || category.downcase == "sis") 
+      return "Sister"
+    elsif (category.downcase == "teacher")
+      return "Teacher"
+    else
+      return "Brother"
+#      redirectto
+    end
+
+  end
+  def _check_is_bk(is_bk)
+    if (is_bk.downcase == "no")
+      return 0
+    else
+      return 1
+    end
+  end
+
 end

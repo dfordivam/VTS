@@ -42,10 +42,8 @@
     		<td align="right"><%= h(participant.age) %></td>
     		<td align="right"><%= h(participant.in_gyan) %></td>
     		<td width="50px" align="center"><%= link_to image_tag("view.png", :border => 0, :title => 'View Details'), {:action => 'show', :id => participant} %></td>
-                <% if @user.id != 1 || @user.centre_id != 4068 -%>
                   <td width="50px" align="center"><%= link_to image_tag("edit.png", :border => 0, :title => 'Edit Details'), {:action => 'edit', :id => participant} %></td>
                   <td width="50px" align="center"><%= link_to image_tag("delete.png", :border => 0, :title => 'Delete'), {:action => 'delete', :id => participant}, :confirm => 'Are you sure?' %></td>
-                <% end %>
     	</tr>
     	<% end -%>
     </table>
@@ -67,3 +65,4 @@
 		<input type="button" class="button ml20" id="closeMsg" name="closeMsg" value="Cancel" />
 	</p>
 </div>
+<%#= debug @participants %>
