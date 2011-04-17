@@ -173,7 +173,7 @@ class RegistrationController < ApplicationController
       end
       @user = User.find(:first, :conditions => ['centre_id = ?', @registration.centre_id])
       @trains = Train.find(:all, :order => "trnno")
-#      Mailsender.deliver_new_registration(@registration, @trains, @user.username)
+      Mailsender.deliver_new_registration(@registration, @trains, @user.username)
       flash[:notice] = 'Registration is successfully created.<br/><span class="req">You need to take corresponding <b>registration slip and form print out</b> when you are coming to attend any program.</span>'
       redirect_to :action => 'list'
     else
