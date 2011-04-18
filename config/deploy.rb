@@ -6,7 +6,7 @@ set :repository,  "git@github.com:dfordivam/VTS.git"
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-set :deploy_via, :remote_cache
+#set :deploy_via, :remote_cache
 set :branch, "master"
 
 if (!env.nil? && env == "production")
