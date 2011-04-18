@@ -150,7 +150,7 @@ class RegistrationController < ApplicationController
       
       user = User.find(:first, :conditions => ["centre_id = ?", @registration.centre_id])
       if user
-        Mailsender.deliver_reply_message(user.username, params[:msg], @registration.event.event_name)
+#        Mailsender.deliver_reply_message(user.username, params[:msg], @registration.event.event_name)
         render :json => {:status => true, :result => "Mail has been sent to #{user.username}"}.to_json
       end
     end
@@ -256,7 +256,7 @@ class RegistrationController < ApplicationController
           sheet1.row(i).insert 5, "#{addr}"
           sheet1.row(i).insert 6, "#{@registration.arrival_date.strftime('%d-%m-%Y')}"
           if @travel
-            sheet1.row(i).insert 7, "#{@travel.departure_date.strftime('%m-%d-%Y')}"
+            sheet1.row(i).insert 7, "#{@travel.departure_date.strftime('%d-%m-%Y')}"
           end
           if @train
             sheet1.row(i).insert 8, "#{@train.trnno}"

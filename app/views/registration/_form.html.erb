@@ -1,69 +1,75 @@
-<script type="text/javascript" src="/javascripts/common.js"></script>
+<script type="text/javascript" src="/javascripts/newregistration.js"></script>
 <% if @user.id != 1 || @user.centre_id != 4068 -%> 
   <div id="select_participant" >
     <tr><td colspan="6"><br/><hr><br/></td></tr>
     <tr>
       <td colspan="6">
-      <strong>Select Participants from below list </strong> <span class="req">*</span>
-      <% if @user.id != 1 && @user.centre_id != 4068 -%>
-      <p class="ar"><%= link_to "Create New Participant &raquo;", {:controller => 'participant', :action => 'new'}, :class => 'button' %></p>
-      <% end -%>
+        <strong>Select Participants from below list </strong> <span class="req">*</span>
+        <% if @user.id != 1 && @user.centre_id != 4068 -%>
+          <p class="ar"><%= link_to "Create New Participant &raquo;", {:controller => 'participant', :action => 'new'}, :class => 'button' %></p>
+        <% end -%>
       </td>
-      </tr>
+    </tr>
 
-      <tr><td colspan="6" align="center"><img id="list_loader" src="/images/loaderbig.gif" alt="loader" width="48px" height="48px" style="display: none;" /></td></tr>
-      <tr><td>
-      Teachers
-      <div id="participant_category_div_teacher" >
-      <% for participant in @participants_teachers -%>
-        <table >
-            <tr class= "<%= cycle('list_line_odd', 'list_line_even') %>"  ><td>
-      <li><td>
-      <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant), :onclick =>
-      "update_count(this, registration_bk_teachers)" %></td>
-      <td><%= h(participant.first_name) %> <%= h(participant.middle_name) %> <%= h(participant.last_name) %></td>
-      <td><b>Age:</b> <%=  h(participant.age)%> </td>
-      </li>
-      </td></tr>
-      </table>
-      <%end %>
+    <tr><td colspan="6" align="center"><img id="list_loader" src="/images/loaderbig.gif" alt="loader" width="48px" height="48px" style="display: none;" /></td></tr>
+    <tr><td>
+      <div id="div_teacher">
+          Click here see/hide Teachers lists...</div>
+        <div id="participant_category_div_teacher" style="display:none;">
+          <% for participant in @participants_teachers -%>
+            <table >
+              <tr class= "<%= cycle('list_line_odd', 'list_line_even') %>"  ><td>
+                  <li><td>
+                    <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant), :onclick =>
+                    "update_count(this, registration_bk_teachers)" %></td>
+                  <td><%= h(participant.first_name) %> <%= h(participant.middle_name) %> <%= h(participant.last_name) %></td>
+                  <td><b>Age:</b> <%=  h(participant.age)%> </td>
+                  </li>
+              </td></tr>
+            </table>
+          <%end %>
+        </div>
       </div>
-    </td></tr>
-    <tr><td colspan="6"><br/><hr><br/></td></tr>
-    <tr><td>
-        BK Brothers
-        <div id="participant_category_div_bk_bro" >
-          <%= render  :partial => "participant_category" , :object => @participants_bk_bro, 
-            :locals => { :registration_count => 'registration_bk_bro' }
-          %>
-        </div>
-    </td></tr>
-    <tr><td colspan="6"><br/><hr><br/></td></tr>
-    <tr><td>
-        BK Sisters
-        <div id="participant_category_div_bk_sis" >
-          <%= render  :partial => "participant_category" , :object => @participants_bk_sis, 
-            :locals => { :registration_count => 'registration_bk_sis' }
-          %>
-        </div>
-    </td></tr>
-    <tr><td colspan="6"><br/><hr><br/></td></tr>
-    <tr><td>
-        Non-BK Brothers
-        <div id="participant_category_div_nbk_bro" >
-          <%= render  :partial => "participant_category" , :object => @participants_nbk_bro, 
-            :locals => { :registration_count => 'registration_nbk_bro' }
-          %>
-        </div>
-    </td></tr>
-    <tr><td colspan="6"><br/><hr><br/></td></tr>
-    <tr><td>
-        Non-BK Sisters
-        <div id="participant_category_div_nbk_sis" >
-          <%= render  :partial => "participant_category" , :object => @participants_nbk_sis, 
-            :locals => { :registration_count => 'registration_nbk_sis' }
-          %>
-        </div>
+  </td></tr>
+  <tr><td colspan="6"><br/><hr><br/></td></tr>
+  <tr><td>
+      <div id="div_bk_bro">
+       Click here see/hide BK Brothers lists...</div>
+       <div id="participant_category_div_bk_bro" style="display:none;">
+                 <%= render  :partial => "participant_category" , :object => @participants_bk_bro,
+           :locals => { :registration_count => 'registration_bk_bro' }
+         %>
+       </div>
+   </td></tr>
+   <tr><td colspan="6"><br/><hr><br/></td></tr>
+   <tr><td>
+       <div id="div_bk_sis">
+       Click here see/hide BK Sisters lists...</div>
+       <div id="participant_category_div_bk_sis" style="display:none;">
+         <%= render  :partial => "participant_category" , :object => @participants_bk_sis,
+           :locals => { :registration_count => 'registration_bk_sis' }
+         %>
+       </div>
+   </td></tr>
+   <tr><td colspan="6"><br/><hr><br/></td></tr>
+   <tr><td>
+       <div id="div_nbk_bro">
+       Click here see/hide Non-BK Brothers lists...</div>
+       <div id="participant_category_div_nbk_bro" style="display:none;">
+         <%= render  :partial => "participant_category" , :object => @participants_nbk_bro,
+           :locals => { :registration_count => 'registration_nbk_bro' }
+         %>
+       </div>
+   </td></tr>
+   <tr><td colspan="6"><br/><hr><br/></td></tr>
+   <tr><td>
+       <div id="div_nbk_sis">
+       Click here see/hide Non-BK Sisters lists...</div>
+       <div id="participant_category_div_nbk_sis" style="display:none;">
+         <%= render  :partial => "participant_category" , :object => @participants_nbk_sis,
+           :locals => { :registration_count => 'registration_nbk_sis' }
+         %>
+       </div>
     </td></tr>
   </div>
 <% end %>
