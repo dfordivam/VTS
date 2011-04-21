@@ -12,6 +12,9 @@ class ParticipantController < ApplicationController
   end
   
   def new
+    user     = current_user
+    centre = Centre.find(user.centre_id)
+    @address = Address.find(centre.address_id)
     @participant = Participant.new()
   end
   

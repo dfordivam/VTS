@@ -10,6 +10,24 @@
 		<td>Age <span class="req">*</span></td>
 		<td><%= text_field 'participant', 'age',  :size => 10, :maxlength => 3, :class => "text" %></td>
 	</tr>
+
+        <tr><td colspan="4"><br/><strong>Personal Information</strong><br/></td></tr>
+    <tr id="bk_req_1" style="<% if !@participant.is_bk -%>display: none;<% end -%>">
+        <td>Years in Gyan <span class="req">*</span></td>
+        <td><%= text_field 'participant', 'in_gyan', :size => 10, :maxlength => 2, :class => "text"  %></td>
+        <td>Observing Purity <span class="req">*</span></td>
+        <td><%= text_field 'participant', 'in_purity', :size => 10, :maxlength => 2, :class => "text" %>&nbsp; in year(s)</td>
+    </tr>
+    <tr id="bk_req_2" style="<% if !@participant.is_bk -%>display: none;<% end -%>">
+        <td>Observing Purity of Food <span class="req">*</span></td>
+        <td><%= text_field 'participant', 'in_food', :size => 10, :maxlength => 2, :class => "text" %>&nbsp; in year(s)</td>
+        <td>Attending Murli class regularly <span class="req">*</span></td>
+        <td><%= text_field 'participant', 'in_murli', :size => 10, :maxlength => 2, :class => "text" %>&nbsp; in year(s)</td>
+    </tr>
+	<tr>
+        <td>Nationality <span class="req">*</span></td>
+        <td><%= text_field 'participant', 'nationality', :size => 30, :maxlength => 64, :class => "text", :value => "Indian" %></td>
+	
 	<tr><td colspan="4"><br/><strong>Address Details</strong><br/></td></tr>
 	<tr>
 		<td>Address Line 1 <span class="req">*</span></td>
@@ -27,8 +45,9 @@
 		<td>Pin code <span class="req">*</span></td>
 		<td><%= text_field 'address', 'pincode', :size => 30, :maxlength => 6, :class => "text" %></td>
 		<td>Country <span class="req">*</span></td>
-		<td><%= text_field 'address', 'country', :size => 30, :maxlength => 32, :class => "text" %></td>
+		<td><%= text_field 'address', 'country', :size => 30, :maxlength => 32, :class => "text", :value => "India" %></td>
 	</tr>
+   <tr><td colspan="6"><br/><hr><br/></td></tr> 
     <tr><td colspan="4"><br/><strong>Contact Details</strong><br/></td></tr>
 	<tr>
 		<td>Telephone Number</td>
@@ -54,37 +73,23 @@
 		<td>Email 2</td>
 		<td><%= text_field 'contact', 'email2', :size => 30, :class => "text" %></td>
 	</tr>
-    <tr><td colspan="4"><br/><strong>Personal Information</strong><br/></td></tr>
-    <tr id="bk_req_1" style="<% if !@participant.is_bk -%>display: none;<% end -%>">
-        <td>Years in Gyan <span class="req">*</span></td>
-        <td><%= text_field 'participant', 'in_gyan', :size => 10, :maxlength => 2, :class => "text"  %></td>
-        <td>Observing Purity <span class="req">*</span></td>
-        <td><%= text_field 'participant', 'in_purity', :size => 10, :maxlength => 2, :class => "text" %>&nbsp; in year(s)</td>
-    </tr>
-    <tr id="bk_req_2" style="<% if !@participant.is_bk -%>display: none;<% end -%>">
-        <td>Observing Purity of Food <span class="req">*</span></td>
-        <td><%= text_field 'participant', 'in_food', :size => 10, :maxlength => 2, :class => "text" %>&nbsp; in year(s)</td>
-        <td>Attending Murli class regularly <span class="req">*</span></td>
-        <td><%= text_field 'participant', 'in_murli', :size => 10, :maxlength => 2, :class => "text" %>&nbsp; in year(s)</td>
-    </tr>
-	<tr>
-        <td>Nationality <span class="req">*</span></td>
-        <td><%= text_field 'participant', 'nationality', :size => 30, :maxlength => 64, :class => "text" %></td>
-		<td>Education</td>
-		<td><%= text_field 'participant', 'education', :size => 30, :class => "text" %></td>
-	</tr>
-	<tr>
-		<td>Profession</td>
-		<td><%= text_field 'participant', 'profession', :size => 30, :class => "text" %></td>
-		<td>Skills</td>
-		<td><%= select 'participant', 'skills', ["", "Basic Computing Skills", "Basic Operating Switchboard Skills", "Business Skills - Advanced", "Business Skills - Basic", "Communication Skills", "Co-ordinating Skills", "Creative Skills", "Customer Services Skills", "General Maintenance Skills", "Health & Safety Skills", "Housekeeping Skills", "IT Skills - Hardware", "IT Skills - Software", "Media Software Skills", "People Management Skills", "Planning Skills", "Project Management Skills", "Personal Development Skills", "Stage Management Skills" ], {}, :class => "select" %></td>
-	</tr>
-	<tr>
-		<td>Blood Group</td>
-		<td><%= text_field 'participant', 'blood_group', :size => 10, :maxlength => 4, :class => "text" %></td>
-		<td>PAN Number</td>
-		<td><%= text_field 'participant', 'PAN', :size => 30, :maxlength => 64, :class => "text" %></td>
-	</tr>
 	<tr>
 		<td colspan="4">&nbsp;</td>
 	</tr>
+    <tr><td colspan="4"><br/><strong>Other Details (Optional)</strong><br/></td></tr>
+                <td>Education</td>
+                <td><%= text_field 'participant', 'education', :size => 30, :class => "text" %></td>
+        </tr>
+        <tr>
+                <td>Profession</td>
+                <td><%= text_field 'participant', 'profession', :size => 30, :class => "text" %></td>
+                <td>Skills</td>
+                <td><%= select 'participant', 'skills', ["", "Basic Computing Skills", "Basic Operating Switchboard Skills", "Business Skills - Advanced", "Business Skills - Basic", "Communication Skills", "Co-ordinating Skills", "Creative Skills", "Customer Services Skills", "General Maintenance Skills", "Health & Safety Skills", "Housekeeping Skills", "IT Skills - Hardware", "IT Skills - Software", "Media Software Skills", "People Management Skills", "Planning Skills", "Project Management Skills", "Personal Development Skills", "Stage Management Skills" ], {}, :class => "select" %></td>
+        </tr>
+        <tr>
+                <td>Blood Group</td>
+                <td><%= text_field 'participant', 'blood_group', :size => 10, :maxlength => 4, :class => "text" %></td>
+                <td>PAN Number</td>
+                <td><%= text_field 'participant', 'PAN', :size => 30, :maxlength => 64, :class => "text" %></td>
+        </tr>
+
