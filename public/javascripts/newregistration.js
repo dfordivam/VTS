@@ -22,4 +22,5 @@ $(document).ready(function(){
     $("#div_bk_sis").click(function(){$("#participant_category_div_bk_sis").slideToggle("slow");});
     $("#div_nbk_bro").click(function(){$("#participant_category_div_nbk_bro").slideToggle("slow");});
     $("#div_nbk_sis").click(function(){$("#participant_category_div_nbk_sis").slideToggle("slow");});
-    } )
+    $(".participant_list tr:last-child").click(function(){ $(this).parent().parent().parent().hide("slow"); });
+    })

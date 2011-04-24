@@ -1,5 +1,5 @@
-<% for participant in participant_category -%>
-  <table >
+<table class="participant_list">
+  <% for participant in participant_category -%>
     <tr class= "<%= cycle('list_line_odd', 'list_line_even') %>"  ><td>
         <li><td>
           <%= check_box_tag "registration[participant_ids][]", participant.id, @registration.participants.include?(participant), :onclick => 
@@ -8,6 +8,8 @@
         <td><b>Age:</b> <%=  h(participant.age)%> </td>
         </li>
     </td></tr>
-  </table>
-<%end %>
+  <%end %>
+  <tr><td></td><td></td><td>Click Here to Hide List</td></tr>
+</table>
+
 
