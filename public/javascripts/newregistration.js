@@ -1,6 +1,4 @@
 // New Registration page only javascript APIs 
-//
-//
 function update_total_count(){
     $("#registration_total_bro").val(parseInt($("#registration_bk_bro").val()) + parseInt($("#registration_nbk_bro").val()));
     $("#registration_total_sis").val(parseInt($("#registration_bk_sis").val()) + parseInt($("#registration_nbk_sis").val()));
@@ -22,4 +20,5 @@ $(document).ready(function(){
     $("#div_bk_sis").click(function(){$("#participant_category_div_bk_sis").slideToggle("slow");});
     $("#div_nbk_bro").click(function(){$("#participant_category_div_nbk_bro").slideToggle("slow");});
     $("#div_nbk_sis").click(function(){$("#participant_category_div_nbk_sis").slideToggle("slow");});
-    } )
+    $(".participant_list tr:last-child").click(function(){ $(this).parent().parent().parent().hide("slow"); });
+    })
