@@ -1,0 +1,46 @@
+<script type="text/javascript" src="/javascripts/newparticipant.js"></script>
+	
+	<tr><td colspan="4"><div id = "more_info" style="display:none"><br/><strong>Contact Details</strong><br/></div></td></tr>
+	<tr>
+		<td><div id = "more_info" style="display:none">Telephone Number</div></td>
+		<td><div id = "more_info" style="display:none"><%= text_field 'contact', 'phone', :size => 30, :class => "text" %></div></td>
+		<td><div id = "more_info" style="display:none">Mobile Number</div></td>
+		<td><div id = "more_info" style="display:none"><%= text_field 'contact', 'mobile', :size => 30, :class => "text" %></div></td>
+	</tr>
+	<tr>
+		<td><div id = "more_info" style="display:none">Office Number</div></td>
+		<td><div id = "more_info" style="display:none"><%= text_field 'contact', 'office_no', :size => 30, :class => "text" %></div></td>
+		<td><div id = "more_info" style="display:none">&nbsp;</div></td>
+		<td><div id = "more_info" style="display:none">&nbsp;</div></td>
+	</tr>
+	<tr>
+		<td><div id = "more_info" style="display:none">Resident Fax</div></td>
+		<td><div id = "more_info" style="display:none"><%= text_field 'contact', 'fax', :size => 30, :class => "text" %></div></td>
+		<td><div id = "more_info" style="display:none">Office Fax</div></td>
+		<td><div id = "more_info" style="display:none"><%= text_field 'contact', 'office_fax', :size => 30, :class => "text" %></div></td>
+	</tr>
+	<tr>
+		<td><div id = "more_info" style="display:none">Email 1</div></td>
+		<td><div id = "more_info" style="display:none"><%= text_field 'contact', 'email1', :size => 30, :class => "text" %></div></td>
+		<td><div id = "more_info" style="display:none">Email 2</div></td>
+		<td><div id = "more_info" style="display:none"><%= text_field 'contact', 'email2', :size => 30, :class => "text" %></div></td>
+	</tr>
+	<tr>
+		<td colspan="4"><div id = "more_info" style="display:none">&nbsp;</div></td>
+	</tr>
+    <tr><td colspan="4"><div id = "more_info" style="display:none"><br/><strong>Other Details (Optional)</strong><br/></div></td></tr>
+                <td><div id = "more_info" style="display:none">Education</div></td>
+                <td><div id = "more_info" style="display:none"><%= text_field 'participant', 'education', :size => 30, :class => "text" %></div></td>
+        </tr>
+        <tr>
+                <td><div id = "more_info" style="display:none">Profession</div></td>
+                <td><div id = "more_info" style="display:none"><%= text_field 'participant', 'profession', :size => 30, :class => "text" %></div></td>
+                <td><div id = "more_info" style="display:none">Skills</div></td>
+                <td><div id = "more_info" style="display:none"><%= select 'participant', 'skills', ["", "Basic Computing Skills", "Basic Operating Switchboard Skills", "Business Skills - Advanced", "Business Skills - Basic", "Communication Skills", "Co-ordinating Skills", "Creative Skills", "Customer Services Skills", "General Maintenance Skills", "Health & Safety Skills", "Housekeeping Skills", "IT Skills - Hardware", "IT Skills - Software", "Media Software Skills", "People Management Skills", "Planning Skills", "Project Management Skills", "Personal Development Skills", "Stage Management Skills" ], {}, :class => "select" %></div></td>
+        </tr>
+        <tr>
+                <td><div id = "more_info" style="display:none">Blood Group</div></td>
+                <td><div id = "more_info" style="display:none"><%= text_field 'participant', 'blood_group', :size => 10, :maxlength => 4, :class => "text" %></div></td>
+                <td><div id = "more_info" style="display:none">PAN Number</div></td>
+                <td><div id = "more_info" style="display:none"><%= text_field 'participant', 'PAN', :size => 30, :maxlength => 64, :class => "text" %></div></td>
+        </tr>

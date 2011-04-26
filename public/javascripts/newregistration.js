@@ -1,6 +1,4 @@
 // New Registration page only javascript APIs 
-//
-//
 function update_total_count(){
     $("#registration_total_bro").val(parseInt($("#registration_bk_bro").val()) + parseInt($("#registration_nbk_bro").val()));
     $("#registration_total_sis").val(parseInt($("#registration_bk_sis").val()) + parseInt($("#registration_nbk_sis").val()));
