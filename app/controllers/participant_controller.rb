@@ -11,6 +11,16 @@ class ParticipantController < ApplicationController
 
   end
 
+  def download 
+    type = params[:type]
+    if type == 'upload_templ'
+      file = "upload_template.xls"
+    end
+    
+    file_path = "#{RAILS_ROOT}/public/downloads/#{file}"
+    send_file file_path, :type => 'application/vnd.ms-excel'
+  end
+
   def new
     user     = current_user
     centre = Centre.find(user.centre_id)
