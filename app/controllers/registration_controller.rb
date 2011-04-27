@@ -222,7 +222,7 @@ class RegistrationController < ApplicationController
         sheet1.row(7).insert 2, "#{@registration.centre.name}"
         sheet1.row(7).insert 6, "Zone"
         sheet1.row(7).insert 7, "#{@registration.centre.zone.name}"
-        sheet1.row(7).insert 9, "Contact No."
+        sheet1.row(5).insert 6, "Contact No."
         
         i = 11
         j = 0

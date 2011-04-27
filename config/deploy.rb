@@ -6,8 +6,8 @@ set :repository,  "git@github.com:dfordivam/VTS.git"
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-set :deploy_via, :remote_cache
-set :branch, "master"
+#set :deploy_via, :remote_cache
+#set :branch, "master"
 
 if (!env.nil? && env == "production")
 puts "Deploying to Production server"
@@ -17,6 +17,7 @@ role :web, "accom.bkinfo.in"                          # This may be the same as 
 role :app, "accom.bkinfo.in"                          # This may be the same as your `Web` server
 role :db,  "accom.bkinfo.in", :primary => true # This is where Rails migrations will run
 server_root = "/home/vts/servers/vts"
+set :branch, "master"
 else
 puts "Deploying to Staging server"
 set :user, "bitnami"
@@ -25,6 +26,7 @@ role :web, "ip-10-243-73-132.ec2.internal"                          # This may b
 role :app, "ip-10-243-73-132.ec2.internal"                          # This may be the same as your `Web` server
 role :db,  "ip-10-243-73-132.ec2.internal", :primary => true # This is where Rails migrations will run
 server_root = "/home/bitnami/servers/VTS.git"
+set :branch, "devel"
 end
 
 # If you are using Passenger mod_rails uncomment this:
