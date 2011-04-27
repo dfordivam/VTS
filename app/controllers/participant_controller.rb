@@ -131,6 +131,11 @@ class ParticipantController < ApplicationController
   end
 
   def uploadexcel
+#    excel_file = params[:upload_excel][:excel_file]
+    if (params[:upload_excel].nil? || params[:upload_excel][:excel_file].nil?)
+      flash[:notice] = 'Please select a file by clicking chose file'
+      redirect_to :action => 'list'
+    else
     excel_file = params[:upload_excel][:excel_file]
     if (excel_file.content_type && excel_file.content_type.chomp == "application/vnd.ms-excel")
       @original_file_name = excel_file.original_filename
@@ -146,6 +151,7 @@ class ParticipantController < ApplicationController
     else
       flash[:notice] = 'File type error. Please upload MS-Excel File'
       redirect_to :action => 'list'
+    end
     end
   end
 
