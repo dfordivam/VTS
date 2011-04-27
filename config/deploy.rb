@@ -49,7 +49,12 @@ end
   task :config_production_rb, :roles => :app do
      run "ln -nfs #{server_root}/shared/system/production.rb #{server_root}/current/config/environments/production.rb"
   end
+  task :config_pdf_manuals, :roles => :app do
+     run "ln -nfs #{server_root}/shared/system/VTS_English_User_Guide.pdf #{server_root}/current/public/downloads/VTS_English_User_Guide.pdf"
+     run "ln -nfs #{server_root}/shared/system/VTS_Hindi_User_Guide.pdf #{server_root}/current/public/downloads/VTS_Hindi_User_Guide.pdf"
+  end
  end
 
 after "deploy:symlink", "custom_code:config_database_yml"
 after "deploy:symlink", "custom_code:config_production_rb"
+after "deploy:symlink", "custom_code:config_pdf_manuals"
