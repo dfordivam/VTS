@@ -1,0 +1,51 @@
+<% content_for :title, "Participants" %>
+
+<% content_for :nav, "contacts" %>
+
+<div id="excel_file_name" >
+  <table>
+    <tr><td>Please note down this File Name and click on Add Data</td>
+      <td>
+        <% form_tag("addDataFromExcel",:method => 'post', :multipart=>true) do %>
+          <%= text_field 'file', :name, :value => @file_name , :readonly => "readonly" %> 
+          <%= submit_tag "Add Data" %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<% if @participants -%>
+    <div class="header">
+        <%= page_entries_info @participants, :entry => 'participant' %>
+    </div>
+    <%= will_paginate @participants %>
+    
+    <table border="0" width="95%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
+    	<tr>
+    		<td width="150px"><b>Category</b></td>
+    		<td width="150px"><b>Is BK?</b></td>
+    		<td><b>First Name</b></td>
+    		<td><b>Last Name</b></td>
+    		<td width="80px"><b>Age</b></td>
+                <td width="100px" align="right"><b>In Gyan </br>(yrs)</b></td>
+    		<td colspan="3">&nbsp;</td>
+    	</tr>
+    	<tr><td colspan="9"><hr style="margin: 0;"/></td></tr>
+    	<% for participant in @participants -%>
+    	<tr>
+    		<td><%= h(participant.category) %></td>
+    		<td><%= h(is_bk(participant.is_bk)) %></td>
+    		<td><%= h(participant.first_name) %></td>
+    		<td><%= h(participant.last_name) %></td>
+    		<td align="right"><%= h(participant.age) %></td>
+    		<td align="right"><%= h(participant.in_gyan) %></td>
+    	</tr>
+    	<% end -%>
+    </table>
+    
+    <br/><br/>
+    <%= will_paginate @participants %>
+<% else -%>
+    <center><br/><br/><h2>No participants were found in the uploaded Excel file</h2></center>
+<% end -%>
