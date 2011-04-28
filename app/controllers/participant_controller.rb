@@ -195,8 +195,12 @@ class ParticipantController < ApplicationController
         participant.contact = contact
 
         last_participant = Participant.last(:conditions => ["centre_id = ?", user_centre_id])
-        no = last_participant.rollno.split('-')[1]
-        rollno = no.to_i + 1
+        if (last_participant)
+          no = last_participant.rollno.split('-')[1]
+          rollno = no.to_i + 1
+        else
+          rollno = 1
+        end
         participant.rollno = "#{user_centre_id}-#{rollno}"
 
         if participant.save
