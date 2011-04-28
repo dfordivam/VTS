@@ -34,6 +34,7 @@ class ParticipantController < ApplicationController
 
     sort = case params[:sort]
            when "category"  then "category"
+           when "is_bk"     then "is_bk"
            when "firstname" then "first_name"
            when "lastname"  then "last_name"
            when "age"       then "age"
