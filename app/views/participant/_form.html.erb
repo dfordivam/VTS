@@ -8,7 +8,6 @@
 		<td>Age <span class="req">*</span></td>
 		<td><%= text_field 'participant', 'age',  :size => 10, :maxlength => 3, :class => "text" %></td>
 	</tr>
-
         <tr><td colspan="4"><br/><strong>Personal Information</strong><br/></td></tr>
     <tr id="bk_req_1" style="<% if !@participant.is_bk -%>display: none;<% end -%>">
         <td>Years in Gyan <span class="req">*</span></td>
