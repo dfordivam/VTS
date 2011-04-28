@@ -5,6 +5,8 @@ ActionController::Routing::Routes.draw do |map|
   map.info   "info",   :controller => "users",         :action => "show"
   map.en_guide "en_guide", :controller => "users", :action => "download", :type => "en"
   map.hi_guide "hi_guide", :controller => "users", :action => "download", :type => "hi"
+  map.excel_templ "excel_templ", :controller => "participant", :action => "download", :type => "upload_templ"
+
 
   map.forgot_password 'forgot_password', :controller => :users, :action => :forgot_password
   map.password_reset '/password_reset/:token', :controller => :users, :action => :edit_password

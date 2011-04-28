@@ -2,13 +2,17 @@
 
 <% content_for :nav, "contacts" %>
 
-<% if @user.id != 1 || @user.centre_id != 4068 -%>
   <div style="width: 95%; margin: 0 auto 10px;">
     <div class="fl al"><%= link_to "Create New Participant &raquo;", {:action => 'new'}, :class => 'button' %></div>
-    <div class="fr ar"></div>
-    <div class="clr"></div>
+    <div class="fr ar">
+<% form_tag("uploadexcel",:method => 'post', :multipart=>true) do %>
+<h3><label for="upload_file">Upload Excel</label> :
+<%= file_field 'upload_excel',:excel_file %>
+<%= submit_tag "Upload" %></h3>
+          <% end %>
+        </div>
+ Excel upload template <%= link_to "download here", excel_templ_path %><div class="clr"></div>
   </div>
-<% end %>
 
 <% if @participants -%>
     <div class="header">
@@ -24,7 +28,7 @@
     		<td><b><%= sort_link_helper('First Name', 'firstname') %></b></td>
     		<td><b><%= sort_link_helper('Last Name', 'lastname') %></b></td>
     		<td width="80px" align="right"><b><%= sort_link_helper('Age', 'age') %></b></td>
-    		<td width="100px" align="right"><b><%= sort_link_helper('In Gyan (yrs)', 'gyan') %></b></td>
+                <td width="100px" align="right"><b><%= sort_link_helper('In Gyan </br>(yrs)', 'gyan') %></b></td>
     		<td colspan="3">&nbsp;</td>
     	</tr>
     	<tr><td colspan="9"><hr style="margin: 0;"/></td></tr>
