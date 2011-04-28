@@ -150,7 +150,7 @@ class RegistrationController < ApplicationController
       
       user = User.find(:first, :conditions => ["centre_id = ?", @registration.centre_id])
       if user
-#        Mailsender.deliver_reply_message(user.username, params[:msg], @registration.event.event_name)
+        Mailsender.deliver_reply_message(user.username, params[:msg], @registration.event.event_name)
         render :json => {:status => true, :result => "Mail has been sent to #{user.username}"}.to_json
       end
     end
@@ -173,7 +173,7 @@ class RegistrationController < ApplicationController
       end
       @user = User.find(:first, :conditions => ['centre_id = ?', @registration.centre_id])
       @trains = Train.find(:all, :order => "trnno")
-#      Mailsender.deliver_new_registration(@registration, @trains, @user.username)
+      Mailsender.deliver_new_registration(@registration, @trains, @user.username)
       flash[:notice] = 'Registration is successfully created.<br/><span class="req">You need to take corresponding <b>registration slip and form print out</b> when you are coming to attend any program.</span>'
       redirect_to :action => 'list'
     else
