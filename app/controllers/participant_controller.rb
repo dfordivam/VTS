@@ -134,7 +134,7 @@ class ParticipantController < ApplicationController
   def uploadexcel
 #    excel_file = params[:upload_excel][:excel_file]
     if (params[:upload_excel].nil? || params[:upload_excel][:excel_file].nil?)
-      flash[:notice] = 'Please select a file by clicking chose file'
+      flash[:notice] = '#ERROR#Please select a file by clicking chose file'
       redirect_to :action => 'list'
     else
     excel_file = params[:upload_excel][:excel_file]

@@ -6,12 +6,12 @@
     <div class="fl al"><%= link_to "Create New Participant &raquo;", {:action => 'new'}, :class => 'button' %></div>
     <div class="fr ar">
 <% form_tag("uploadexcel",:method => 'post', :multipart=>true) do %>
-<h3><label for="upload_file">Upload Excel</label> :
+<h3><label for="upload_file">Upload Participants</label> :
 <%= file_field 'upload_excel',:excel_file %>
-<%= submit_tag "Upload" %></h3>
+<%= submit_tag " Upload " %></h3>
           <% end %>
           </div><div align="center">
-          <%= link_to "Upload Excel Template", excel_templ_path, :class => 'button' %></div><div class="clr"></div>
+          <%= link_to "Download Excel Template", excel_templ_path, :class => 'button' %></div><div class="clr"></div>
   </div>
 
 <% if @participants -%>
