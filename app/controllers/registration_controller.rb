@@ -39,7 +39,7 @@ class RegistrationController < ApplicationController
       @participants = Participant.find(:all, :conditions => ["centre_id = ?", current_user.centre_id], :order => "first_name, last_name")
       @travels = TravelInfo.find(:all, :conditions => ["registration_id = ?", params[:id]])
     else
-      flash[:notice] = 'Unknown Registration.'
+      flash[:notice] = '#ERROR#Unknown Registration.'
       if @user.id == 1 && @user.centre_id == 4068
         redirect_to :action => 'all'
       else
@@ -120,7 +120,7 @@ class RegistrationController < ApplicationController
       @travel = TravelInfo.find(:all, :conditions => ["registration_id = ?", params[:id]])
       @trains = Train.find(:all, :order => "trnno")
     else
-      flash[:notice] = 'Unknown Registration'
+      flash[:notice] = '#ERROR#Unknown Registration'
       redirect_to :action => 'list'
     end
   end
@@ -132,7 +132,7 @@ class RegistrationController < ApplicationController
       @travel = TravelInfo.find(:all, :conditions => ["registration_id = ?", params[:id]])
       @trains = Train.find(:all, :order => "trnno")
     else
-      flash[:notice] = 'Unknown Registration'
+      flash[:notice] = '#ERROR#Unknown Registration'
       redirect_to :action => 'list'
     end
   end
@@ -177,7 +177,7 @@ class RegistrationController < ApplicationController
       flash[:notice] = 'Registration is successfully created.<br/><span class="req">You need to take corresponding <b>registration slip and form print out</b> when you are coming to attend any program.</span>'
       redirect_to :action => 'list'
     else
-      flash[:notice] = 'Registration unsuccessfull, please try again.'
+      flash[:notice] = '#ERROR#Registration unsuccessfull, please try again.'
       render :action => 'new'
     end
   end
@@ -190,7 +190,7 @@ class RegistrationController < ApplicationController
       @registration.destroy
       flash[:notice] = 'Registration deleted'
     else
-      flash[:notice] = 'Unknown Registration'
+      flash[:notice] = '#ERROR#Unknown Registration'
     end
     redirect_to :action => 'list'
   end

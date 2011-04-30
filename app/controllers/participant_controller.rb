@@ -58,7 +58,7 @@ class ParticipantController < ApplicationController
     if @user.id == 1 && @user.centre_id == 4068
     else
       if @participant.centre_id != current_user.centre_id
-        flash[:notice] = 'Unknown Participant'
+        flash[:notice] = '#ERROR#Unknown Participant'
         redirect_to :action => 'list'
       end
     end
@@ -85,7 +85,7 @@ class ParticipantController < ApplicationController
       @address = Address.find(@participant.address)
       @contact = Contact.find(@participant.contact)
     else
-      flash[:notice] = 'Unknown Participant'
+      flash[:notice] = '#ERROR#Unknown Participant'
       redirect_to :action => 'list'
     end
   end
@@ -104,7 +104,7 @@ class ParticipantController < ApplicationController
         render :action => 'edit'
       end
     else
-      flash[:notice] = 'Unknown Participant'
+      flash[:notice] = '#ERROR#Unknown Participant'
       redirect_to :action => 'list'
     end
   end
@@ -116,7 +116,7 @@ class ParticipantController < ApplicationController
       Contact.find(@participant.contact).destroy
       flash[:notice] = 'Participant details are deleted.'
     else
-      flash[:notice] = 'Unknown Participant'
+      flash[:notice] = '#ERROR#Unknown Participant'
     end
     redirect_to :action => 'list'
   end
@@ -150,7 +150,7 @@ class ParticipantController < ApplicationController
       items_per_page = 1000
       @participants = @participants_1.paginate  :per_page => items_per_page, :page => params[:page]
     else
-      flash[:notice] = 'File type error. Please upload MS-Excel File'
+      flash[:notice] = '#ERROR#File type error. Please upload MS-Excel File'
       redirect_to :action => 'list'
     end
     end
@@ -177,7 +177,7 @@ class ParticipantController < ApplicationController
     end
 
     if (@error)
-      flash[:notice] = "There was some error adding participants. (#{@count} participants successfully added) "
+      flash[:notice] = "#ERROR#There was some error adding participants. (#{@count} participants successfully added) "
     else
       flash[:notice] = "#{@count} Participant details successfully added to contacts list."
     end
@@ -238,7 +238,7 @@ class ParticipantController < ApplicationController
         participants.insert(-1,_retrieve_data(row))
       end
     else
-      flash[:notice] = "Problem in first row of excel file. Please use the template file to upload the participants list."
+      flash[:notice] = "#ERROR#Problem in first row of excel file. Please use the template file to upload the participants list."
       redirect_to :action => 'list'
     end
     return participants

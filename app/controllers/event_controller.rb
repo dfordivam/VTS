@@ -16,7 +16,7 @@ class EventController < ApplicationController
       flash[:notice] = 'Event details added successfully.'
       redirect_to :action => 'list'
     else
-      flash[:notice] = 'Something went wrong, please check all fields and try again.'
+      flash[:notice] = '#ERROR#Something went wrong, please check all fields and try again.'
       render :action => 'new'
     end
   end
@@ -39,11 +39,11 @@ class EventController < ApplicationController
         flash[:notice] = 'Event details updated successfully.'
         redirect_to :action => 'list'
       else
-        flash[:notice] = 'Something went wrong, please check all fields and try again.'
+        flash[:notice] = '#ERROR#Something went wrong, please check all fields and try again.'
         render :action => 'edit'
       end
     else
-      flash[:notice] = 'Unknown Event'
+      flash[:notice] = '#ERROR#Unknown Event'
       redirect_to :action => 'list'
     end
   end
@@ -55,7 +55,7 @@ class EventController < ApplicationController
       @event.destroy
       flash[:notice] = 'Event deleted'
     else
-      flash[:notice] = 'Unknown Event'
+      flash[:notice] = '#ERROR#Unknown Event'
     end
     redirect_to :action => 'list'
   end
