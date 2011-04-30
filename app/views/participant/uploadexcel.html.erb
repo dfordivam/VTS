@@ -4,15 +4,15 @@
 
 <div id="excel_file_name" >
   <table>
-    <tr><td>Please note down this File Name and click on Add Data</td>
+    <tr><td><strong/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please note down this File Name and click on Add Data&nbsp;&nbsp;</td>
       <td>
         <% form_tag("addDataFromExcel",:method => 'post', :multipart=>true) do %>
           <%= text_field 'file', :name, :value => @file_name , :readonly => "readonly" %> 
-          <%= submit_tag "Add Data" %>
+          <%= submit_tag " Add Data " %>
         <% end %>
       </td>
     </tr>
-  </table>
+  </table><br>
 </div>
 
 <% if @participants -%>
