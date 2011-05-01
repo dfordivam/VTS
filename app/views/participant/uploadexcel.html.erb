@@ -8,7 +8,12 @@
       <td>
         <% form_tag("addDataFromExcel",:method => 'post', :multipart=>true) do %>
           <%= text_field 'file', :name, :value => @file_name , :readonly => "readonly" %> 
-          <%= submit_tag " Add Data " %>
+	  <% if flash[:notice] %>
+	        <%= submit_tag " Add Data ", :disabled => true %>
+	        <%= link_to "&laquo; Back to upload", {:controller => 'participant', :action => 'back_to_upload'}, :class => 'button' %>
+	  <% else %>
+	        <%= submit_tag " Add Data ", :disabled => false %>
+	  <% end %>
         <% end %>
       </td>
     </tr>
@@ -27,7 +32,7 @@
     		<td width="150px"><b>Is BK?</b></td>
     		<td><b>First Name</b></td>
     		<td><b>Last Name</b></td>
-    		<td width="80px"><b>Age</b></td>
+    		<td width="80px" align="right"><b>Age</b></td>
                 <td width="100px" align="right"><b>In Gyan </br>(yrs)</b></td>
     		<td colspan="3">&nbsp;</td>
     	</tr>

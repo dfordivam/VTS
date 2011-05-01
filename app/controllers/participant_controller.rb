@@ -31,7 +31,6 @@ class ParticipantController < ApplicationController
   def list
     @user = current_user
     items_per_page = 30
-
     sort = case params[:sort]
            when "category"  then "category"
            when "is_bk"     then "is_bk"
@@ -121,6 +120,11 @@ class ParticipantController < ApplicationController
     redirect_to :action => 'list'
   end
 
+  def back_to_upload
+     flash[:notice] = '#ERROR#' + flash[:notice]
+     redirect_to :action => 'list'
+  end
+  
   def get_list
     @user = current_user
     if @user.id == 1 && @user.centre_id == 4068
@@ -233,9 +237,19 @@ class ParticipantController < ApplicationController
     @sheet1 = book.worksheet 0
     first_row = @sheet1.row(0)
     participants = []
+    error_msg = Array.new
+    error_msg << "#ERROR#Below Participant record(s) in Excel Sheet is(are) invalid. Please correct the records and upload again"
+    record_num = 0
     if (_check_first_row(first_row))
       @sheet1.each 1 do |row|
-        participants.insert(-1,_retrieve_data(row))
+         if ! row.nil? then
+	    record_num += 1
+	    if ! _is_bad_rec? row then  
+	      participants.insert(-1,_retrieve_data(row))
+	    else  
+	      flash[:notice] = _create_error_message(row,error_msg,record_num)
+	   end
+         end
       end
     else
       flash[:notice] = "#ERROR#Problem in first row of excel file. Please use the template file to upload the participants list."
@@ -243,6 +257,20 @@ class ParticipantController < ApplicationController
     end
     return participants
   end  
+
+  def _is_bad_rec? (row)
+     for lp in 0..12     ## Col 1 to Col 13 are mandatory columns in upload excel sheet
+        return true if row[lp].to_s == ""
+     end
+     return false
+  end
+
+  def _create_error_message(row, error_msg, record_num)
+     row[0] = "Record #" + record_num.to_s + ") " + row[0].to_s
+     error_msg << row.join(", ")
+     #error_msg = "Record #" + record_num.to_s + ") " + error_msg
+     return error_msg.join("<br>")
+  end
 
   def _check_first_row(first_row)
     gold = ["Category","First Name", "Last Name" , "BK", "Age", "Address", "City", "State", "Country", "Years in Gyan", "Observing Purity (Years)", "Purity of Food (Years)", "Attending Murli Class (Years)","Profession (Optional)", "Mobile (Optional)"]
