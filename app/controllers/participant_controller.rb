@@ -120,6 +120,22 @@ class ParticipantController < ApplicationController
     redirect_to :action => 'list'
   end
 
+  def delete_selected
+    @participants = Participant.find(:all,:conditions => ["centre_id = ?", current_user.centre_id])
+    @total_rec = 0
+    for participant in @participants
+      if params[:del][participant.rollno] == "1" then
+         participant.destroy
+	 Address.find(participant.address).destroy
+	 Contact.find(participant.contact).destroy
+         @total_rec += 1
+      end 
+    end
+    flash[:notice] = "#{@total_rec} participants deleted successfully" if @total_rec > 0
+    flash[:notice] = "#ERROR#Select at least one participant to delete !!" if @total_rec == 0
+    redirect_to :action => 'list'
+  end
+
   def back_to_upload
      flash[:notice] = '#ERROR#' + flash[:notice]
      redirect_to :action => 'list'

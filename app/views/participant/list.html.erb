@@ -20,6 +20,7 @@
     </div>
     <%= will_paginate @participants %>
     
+    <% form_tag("delete_selected",:method => 'post', :multipart=>true) do %>
     <table border="0" width="95%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
     	<tr>
     		<td width="150px"><b><%= sort_link_helper('Roll Number', 'rollno') %></b></td>
@@ -45,12 +46,15 @@
                 <% if @user.id != 1 || @user.centre_id != 4068 -%>
                   <td width="50px" align="center"><%= link_to image_tag("edit.png", :border => 0, :title => 'Edit Details'), {:action => 'edit', :id => participant} %></td>
                   <td width="50px" align="center"><%= link_to image_tag("delete.png", :border => 0, :title => 'Delete'), {:action => 'delete', :id => participant}, :confirm => 'Are you sure?' %></td>
-                <% end %>
+                  <td width="50px" align="center"><%= check_box "del", participant.rollno %> </td>
+		<% end %>
     	</tr>
     	<% end -%>
     </table>
-    
-    <br/><br/>
+    <br/>
+    <div class="fr ar"><%= submit_tag " Delete Selected ", :confirm => 'Are you sure?' %></div>
+    <%end%>
+    <br/><br/><br/>
     <%= will_paginate @participants %>
 <% else -%>
     <center><br/><br/><h2>No participants listed</h2></center>
