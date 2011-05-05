@@ -16,7 +16,7 @@
 		<tr>
 			<td width="20%">Category</td>
 			<td width="30%">
-				<%= select 'participant', 'category', ["Brother", "Sister", "Teacher"], {}, {:class => "select pcat"} %>
+				<%= select 'participant', 'category', [ "Teacher", "Brother", "Sister"], {:class => "select pcat"},{:onchange=>"show_hide_surrender(this)"} %>
 			</td>
 			<td width="20%">BK ? <span class="req">*</span></td>
 			<td width="30%">

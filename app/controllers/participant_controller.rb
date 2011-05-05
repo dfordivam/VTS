@@ -26,6 +26,7 @@ class ParticipantController < ApplicationController
     centre = Centre.find(user.centre_id)
     @address = Address.find(centre.address_id)
     @participant = Participant.new()
+    @srndr_years = _fill_years  
   end
 
   def list
@@ -74,10 +75,11 @@ class ParticipantController < ApplicationController
       flash[:notice] = 'Participant details successfully added to contacts list.'
       redirect_to :action => 'list'
     else
+      @srndr_years = _fill_years
       render :action => 'new'
     end
   end
-
+ 
   def edit
     @participant = Participant.find(params[:id])
     if @participant.centre_id == current_user.centre_id
@@ -206,6 +208,14 @@ class ParticipantController < ApplicationController
   end
 
   private
+
+  def _fill_years
+    @srndr_years = [""]
+    (Time.new.year-1935).times do |yr|
+       @srndr_years << (yr + 1936).to_s
+    end  
+    return @srndr_years
+  end
 
   def _add_data_to_db(user_centre_id, participant, address, contact)
     participant.centre_id = user_centre_id
