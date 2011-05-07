@@ -252,7 +252,10 @@ class RegistrationController < ApplicationController
           end
           sheet1.row(i).insert 3, "#{gender}"
           sheet1.row(i).insert 4, "#{participant.in_purity + add_year}"
-          addr = participant.address.addr1 + " " + participant.address.addr2 + " " + participant.address.city + " " + participant.address.state + " " + participant.address.pincode
+          addr = participant.address.addr1
+          addr = participant.address.addr2.nil? ? addr : addr + " " + participant.address.addr2
+          addr = addr + " " + participant.address.city + " " + participant.address.state + " " + participant.address.pincode
+
           sheet1.row(i).insert 5, "#{addr}"
           sheet1.row(i).insert 6, "#{@registration.arrival_date.strftime('%d-%m-%Y')}"
           if @travel
