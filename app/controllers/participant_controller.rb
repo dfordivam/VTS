@@ -26,12 +26,12 @@ class ParticipantController < ApplicationController
     centre = Centre.find(user.centre_id)
     @address = Address.find(centre.address_id)
     @participant = Participant.new()
+    @srndr_years = _fill_years  
   end
 
   def list
     @user = current_user
     items_per_page = 30
-
     sort = case params[:sort]
            when "category"  then "category"
            when "is_bk"     then "is_bk"
@@ -58,7 +58,7 @@ class ParticipantController < ApplicationController
     if @user.id == 1 && @user.centre_id == 4068
     else
       if @participant.centre_id != current_user.centre_id
-        flash[:notice] = 'Unknown Participant'
+        flash[:notice] = '#ERROR#Unknown Participant'
         redirect_to :action => 'list'
       end
     end
@@ -75,17 +75,18 @@ class ParticipantController < ApplicationController
       flash[:notice] = 'Participant details successfully added to contacts list.'
       redirect_to :action => 'list'
     else
+      @srndr_years = _fill_years
       render :action => 'new'
     end
   end
-
+ 
   def edit
     @participant = Participant.find(params[:id])
     if @participant.centre_id == current_user.centre_id
       @address = Address.find(@participant.address)
       @contact = Contact.find(@participant.contact)
     else
-      flash[:notice] = 'Unknown Participant'
+      flash[:notice] = '#ERROR#Unknown Participant'
       redirect_to :action => 'list'
     end
   end
@@ -104,7 +105,7 @@ class ParticipantController < ApplicationController
         render :action => 'edit'
       end
     else
-      flash[:notice] = 'Unknown Participant'
+      flash[:notice] = '#ERROR#Unknown Participant'
       redirect_to :action => 'list'
     end
   end
@@ -116,11 +117,32 @@ class ParticipantController < ApplicationController
       Contact.find(@participant.contact).destroy
       flash[:notice] = 'Participant details are deleted.'
     else
-      flash[:notice] = 'Unknown Participant'
+      flash[:notice] = '#ERROR#Unknown Participant'
     end
     redirect_to :action => 'list'
   end
 
+  def delete_selected
+    @participants = Participant.find(:all,:conditions => ["centre_id = ?", current_user.centre_id])
+    @total_rec = 0
+    for participant in @participants
+      if params[:del][participant.rollno] == "1" then
+         participant.destroy
+	 Address.find(participant.address).destroy
+	 Contact.find(participant.contact).destroy
+         @total_rec += 1
+      end 
+    end
+    flash[:notice] = "#{@total_rec} participants deleted successfully" if @total_rec > 0
+    flash[:notice] = "#ERROR#Select at least one participant to delete !!" if @total_rec == 0
+    redirect_to :action => 'list'
+  end
+
+  def back_to_upload
+     flash[:notice] = '#ERROR#' + flash[:notice]
+     redirect_to :action => 'list'
+  end
+  
   def get_list
     @user = current_user
     if @user.id == 1 && @user.centre_id == 4068
@@ -134,7 +156,7 @@ class ParticipantController < ApplicationController
   def uploadexcel
 #    excel_file = params[:upload_excel][:excel_file]
     if (params[:upload_excel].nil? || params[:upload_excel][:excel_file].nil?)
-      flash[:notice] = 'Please select a file by clicking chose file'
+      flash[:notice] = '#ERROR#Please select a file by clicking chose file'
       redirect_to :action => 'list'
     else
     excel_file = params[:upload_excel][:excel_file]
@@ -150,7 +172,7 @@ class ParticipantController < ApplicationController
       items_per_page = 1000
       @participants = @participants_1.paginate  :per_page => items_per_page, :page => params[:page]
     else
-      flash[:notice] = 'File type error. Please upload MS-Excel File'
+      flash[:notice] = '#ERROR#File type error. Please upload MS-Excel File'
       redirect_to :action => 'list'
     end
     end
@@ -177,7 +199,7 @@ class ParticipantController < ApplicationController
     end
 
     if (@error)
-      flash[:notice] = "There was some error adding participants. (#{@count} participants successfully added) "
+      flash[:notice] = "#ERROR#There was some error adding participants. (#{@count} participants successfully added) "
     else
       flash[:notice] = "#{@count} Participant details successfully added to contacts list."
     end
@@ -186,6 +208,14 @@ class ParticipantController < ApplicationController
   end
 
   private
+
+  def _fill_years
+    @srndr_years = [""]
+    (Time.new.year-1935).times do |yr|
+       @srndr_years << (yr + 1936).to_s
+    end  
+    return @srndr_years
+  end
 
   def _add_data_to_db(user_centre_id, participant, address, contact)
     participant.centre_id = user_centre_id
@@ -233,16 +263,40 @@ class ParticipantController < ApplicationController
     @sheet1 = book.worksheet 0
     first_row = @sheet1.row(0)
     participants = []
+    error_msg = Array.new
+    error_msg << "#ERROR#Below Participant record(s) in Excel Sheet is(are) invalid. Please correct the records and upload again"
+    record_num = 0
     if (_check_first_row(first_row))
       @sheet1.each 1 do |row|
-        participants.insert(-1,_retrieve_data(row))
+         if ! row.nil? then
+	    record_num += 1
+	    if ! _is_bad_rec? row then  
+	      participants.insert(-1,_retrieve_data(row))
+	    else  
+	      flash[:notice] = _create_error_message(row,error_msg,record_num)
+	   end
+         end
       end
     else
-      flash[:notice] = "Problem in first row of excel file. Please use the template file to upload the participants list."
+      flash[:notice] = "#ERROR#Problem in first row of excel file. Please use the template file to upload the participants list."
       redirect_to :action => 'list'
     end
     return participants
   end  
+
+  def _is_bad_rec? (row)
+     for lp in 0..12     ## Col 1 to Col 13 are mandatory columns in upload excel sheet
+        return true if row[lp].to_s == ""
+     end
+     return false
+  end
+
+  def _create_error_message(row, error_msg, record_num)
+     row[0] = "Record #" + record_num.to_s + ") " + row[0].to_s
+     error_msg << row.join(", ")
+     #error_msg = "Record #" + record_num.to_s + ") " + error_msg
+     return error_msg.join("<br>")
+  end
 
   def _check_first_row(first_row)
     gold = ["Category","First Name", "Last Name" , "BK", "Age", "Address", "City", "State", "Country", "Years in Gyan", "Observing Purity (Years)", "Purity of Food (Years)", "Attending Murli Class (Years)","Profession (Optional)", "Mobile (Optional)"]
