@@ -22,9 +22,9 @@ else
   puts "Deploying to Staging server"
   set :user, "bitnami"
   set :deploy_to, "/home/bitnami/servers/VTS.git"
-  role :web, "ip-10-243-73-132.ec2.internal"                          # This may be the same as your `Web` server
-  role :app, "ip-10-243-73-132.ec2.internal"                          # This may be the same as your `Web` server
-  role :db,  "ip-10-243-73-132.ec2.internal", :primary => true # This is where Rails migrations will run
+  role :web, "50.17.185.45"                          # This may be the same as your `Web` server
+  role :app, "50.17.185.45"                          # This may be the same as your `Web` server
+  role :db,  "50.17.185.45", :primary => true # This is where Rails migrations will run
   server_root = "/home/bitnami/servers/VTS.git"
   set :branch, "staging"
 end
