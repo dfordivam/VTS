@@ -85,6 +85,7 @@ class ParticipantController < ApplicationController
     if @participant.centre_id == current_user.centre_id
       @address = Address.find(@participant.address)
       @contact = Contact.find(@participant.contact)
+      @srndr_years = _fill_years  
     else
       flash[:notice] = '#ERROR#Unknown Participant'
       redirect_to :action => 'list'
