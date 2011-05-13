@@ -40,7 +40,7 @@ class UsersController < ApplicationController
         name = params[:centre][:name].upcase
         centre = Centre.find(:first, :conditions => ["name = ?", name])
         if centre
-          flash[:notice] = "This centre already exsits."
+          flash[:notice] = "#ERROR#This centre already exsits."
         else
           @address = Address.new()
           @address.addr1 = 'addr1'
@@ -84,10 +84,10 @@ class UsersController < ApplicationController
           message += "<br/><p class='note'>Note : Please note above details, you can not retrive above details again.</p></div>"
           flash[:notice] = message
         else
-          flash[:notice] = "Something went wrong, please check all fields and try again."
+          flash[:notice] = "#ERROR#Something went wrong, please check all fields and try again."
         end
       else
-        flash[:notice] = "You have already assigned username and password for this centre."
+        flash[:notice] = "#ERROR#You have already assigned username and password for this centre."
       end
       redirect_to :action => 'new'
     else
@@ -142,7 +142,7 @@ class UsersController < ApplicationController
     pwd2 = params[:user][:password_confirmation]
     
     if pwd1.blank? && pwd2.blank?
-      flash[:notice] = "Please check all fields and try again."
+      flash[:notice] = "#ERROR#Please check all fields and try again."
       render :action => 'password'
     else
       if params[:user][:password] == params[:user][:password_confirmation]
@@ -150,11 +150,11 @@ class UsersController < ApplicationController
           flash[:notice] = "Your account password has been updated."
           redirect_to info_url
         else
-          flash[:notice] = "Something went wrong, please check all fields and try again."
+          flash[:notice] = "#ERROR#Something went wrong, please check all fields and try again."
           render :action => 'password'
         end
       else
-        flash[:notice] = "Password and Confirm Password are not same."
+        flash[:notice] = "#ERROR#Password and Confirm Password are not same."
         render :action => 'password'
       end
     end
@@ -165,7 +165,7 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       if @user
         if @user.centre_id == 4068
-          flash[:notice] = 'Can not delete this centre account'
+          flash[:notice] = '#ERROR#Can not delete this centre account'
         else
           Participant.destroy_all(:centre_id => @user.centre_id)
           Registration.destroy_all(:centre_id => @user.centre_id)
@@ -173,7 +173,7 @@ class UsersController < ApplicationController
           flash[:notice] = 'Centre account removed'
         end
       else
-        flash[:notice] = 'Unknown centre account'
+        flash[:notice] = '#ERROR#Unknown centre account'
       end
     end
     redirect_to :action => 'new'
@@ -187,7 +187,7 @@ class UsersController < ApplicationController
         flash[:notice] = "Please check your email."
         redirect_to login_url
       else
-        flash[:notice] = "No user was found with that email address"
+        flash[:notice] = "#ERROR#No user was found with that email address"
         render :action => :forgot_password
       end
     end
@@ -213,7 +213,7 @@ class UsersController < ApplicationController
   def load_user_using_perishable_token
     @user = User.find_using_perishable_token(params[:token], 2.hours)
     unless @user
-      flash[:notice] = "We're sorry, but we could not locate your account. Please contact help desk."
+      flash[:notice] = "#ERROR#We're sorry, but we could not locate your account. Please contact help desk."
       redirect_to root_url
     end
   end

@@ -6,12 +6,12 @@
     <div class="fl al"><%= link_to "Create New Participant &raquo;", {:action => 'new'}, :class => 'button' %></div>
     <div class="fr ar">
 <% form_tag("uploadexcel",:method => 'post', :multipart=>true) do %>
-<h3><label for="upload_file">Upload Excel</label> :
+<h3><label for="upload_file">Upload Participants</label> :
 <%= file_field 'upload_excel',:excel_file %>
-<%= submit_tag "Upload" %></h3>
+<%= submit_tag " Upload " %></h3>
           <% end %>
           </div><div align="center">
-          <%= link_to "Upload Excel Template", excel_templ_path, :class => 'button' %></div><div class="clr"></div>
+          <%= link_to "Download Excel Template", excel_templ_path, :class => 'button' %></div><div class="clr"></div>
   </div>
 
 <% if @participants -%>
@@ -20,6 +20,7 @@
     </div>
     <%= will_paginate @participants %>
     
+    <% form_tag("delete_selected",:method => 'post', :multipart=>true) do %>
     <table border="0" width="95%" cellspacing="4" cellpadding="2" align="center" style="margin: 0 auto 10px;">
     	<tr>
     		<td width="150px"><b><%= sort_link_helper('Roll Number', 'rollno') %></b></td>
@@ -31,7 +32,7 @@
                 <td width="100px" align="right"><b><%= sort_link_helper('In Gyan </br>(yrs)', 'gyan') %></b></td>
     		<td colspan="3">&nbsp;</td>
     	</tr>
-    	<tr><td colspan="9"><hr style="margin: 0;"/></td></tr>
+    	<tr><td colspan="12"><hr style="margin: 0;"/></td></tr>
     	<% for participant in @participants -%>
     	<tr>
     		<td><%= h(participant.rollno) %></td>
@@ -45,12 +46,15 @@
                 <% if @user.id != 1 || @user.centre_id != 4068 -%>
                   <td width="50px" align="center"><%= link_to image_tag("edit.png", :border => 0, :title => 'Edit Details'), {:action => 'edit', :id => participant} %></td>
                   <td width="50px" align="center"><%= link_to image_tag("delete.png", :border => 0, :title => 'Delete'), {:action => 'delete', :id => participant}, :confirm => 'Are you sure?' %></td>
-                <% end %>
+                  <td width="50px" align="center"><%= check_box "del", participant.rollno %> </td>
+		<% end %>
     	</tr>
     	<% end -%>
     </table>
-    
-    <br/><br/>
+    <br/>
+    <div class="fr ar"><%= submit_tag " Delete Selected ", :confirm => 'Are you sure?' %></div>
+    <%end%>
+    <br/><br/><br/>
     <%= will_paginate @participants %>
 <% else -%>
     <center><br/><br/><h2>No participants listed</h2></center>

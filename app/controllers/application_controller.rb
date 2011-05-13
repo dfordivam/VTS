@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def authorize
     unless current_user
-      flash[:notice] = "Please log in"
+      flash[:notice] = "#ERROR#Please log in"
       redirect_to login_url
     end
   end

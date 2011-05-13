@@ -24,7 +24,18 @@
 	<tr>
         <td>Nationality <span class="req">*</span></td>
         <td><%= text_field 'participant', 'nationality', :size => 30, :maxlength => 64, :class => "text", :value => "Indian" %></td>
-	
+    <tr id="surrender">
+        <td>Education</td>
+	<td><%= text_field 'participant', 'education', :size => 30, :maxlength => 64, :class => "text" %></td>
+	<td>Year of Surrender</td>
+	<td>
+	  <select class="select" id="participant" name="participant[surrender_year]">
+	     <% @srndr_years.each do |yr| -%>
+	         <option value="<%= yr %>"><%= yr %></option>
+	     <% end -%>
+	  </select>
+	</td>
+    </tr>
 	<tr><td colspan="4"><br/><strong>Address Details</strong><br/></td></tr>
 	<tr>
 		<td>Address Line 1 <span class="req">*</span></td>
