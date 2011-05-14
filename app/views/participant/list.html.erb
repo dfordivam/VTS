@@ -52,7 +52,9 @@
     	<% end -%>
     </table>
     <br/>
-    <div class="fr ar"><%= submit_tag " Delete Selected ", :confirm => 'Are you sure?' %></div>
+    <% if @user.id != 1 || @user.centre_id != 4068 -%>
+        <div class="fr ar"><%= submit_tag " Delete Selected ", :confirm => 'Are you sure?' %></div>
+    <% end %>
     <%end%>
     <br/><br/><br/>
     <%= will_paginate @participants %>
