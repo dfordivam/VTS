@@ -5,6 +5,20 @@
 <p class="ar"><%= link_to "Create New Event &raquo;", {:action => 'new'}, :class => 'button' %></p>
 
 <% if @events %>
+    <div class="ar">
+      <br/>
+      <% form_tag("downloadRegistrationDetails",:method => 'post', :multipart=>true) do %>
+         <strong>Participant Category:</strong>
+	 <%= select 'participant', 'category', [ "Teacher", "Brother", "Sister"], {:class => "select pcat"}, {} %>
+	 <strong>&nbsp;&nbsp;&nbsp;Event Name:</strong>
+	 <select class="select" id="event" name="event[event_id]">
+	     <% @events.each do |event| -%>
+                 <option value="<%= event.id %>"><%= event.event_name %></option>
+	     <% end -%>
+	 </select>&nbsp;&nbsp;&nbsp;
+	 <%= submit_tag " Download Details " %>
+      <% end %>
+    </div>
     <div class="header">
         <%= page_entries_info @events, :entry => 'event' %>
     </div>
@@ -22,7 +36,7 @@
             <td width="50px" align="center"><strong>Edit &darr;</strong></td>
             <td width="50px" align="center"><strong>Delete &darr;</strong></td>
         </tr>
-        <tr height="30"><td colspan="8"><hr/></td></tr>
+        <tr height="30"><td colspan="12"><hr/></td></tr>
     	<% for event in @events %>
     		<tr class="record">
     			<td align="left"><%= h(event.event_name)%></td>
