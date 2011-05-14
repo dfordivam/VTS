@@ -53,7 +53,7 @@
 				<% end %>
 
                 <% if flash[:notice] %>
-                    <div id="notice" align="center"><%= flash[:notice] %></div>
+                    <div id="notice" align="center" <% if(flash[:notice].index("#ERROR#")==0) then flash[:notice].sub!("#ERROR#","")%> style="color:red" <%end%>><%= flash[:notice] %></div>
                 <% end %>
 
 			<% end %>
