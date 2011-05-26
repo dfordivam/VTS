@@ -77,7 +77,7 @@ class EventController < ApplicationController
      list_name = "#{participant_cat}_#{event_id}.xls"
      list_book = Spreadsheet::Workbook.new
      list_sheet = list_book.create_worksheet(:name => "#{participant_cat}")
-     query = "SELECT participants.first_name, participants.age, participants.education, participants.surrender_year,\ 
+     query = "SELECT participants.first_name, participants.last_name, participants.age, participants.education, participants.surrender_year,\ 
        participants.in_gyan, addresses.addr1, centres.name, centres.id, zones.name\ 
        FROM participants, centres, zones, addresses\ 
        WHERE participants.id IN (SELECT distinct participant_id FROM participants_registrations\ 
@@ -124,7 +124,9 @@ class EventController < ApplicationController
      participants.length.times do |serial_no|
        row_counter += 1 
        list_sheet.row(row_counter).insert 0, (serial_no+1)
-       list_sheet.row(row_counter).insert 1, participants[serial_no].first_name
+       name = participants[serial_no].first_name.nil? ? '' : participants[serial_no].first_name
+       name = participants[serial_no].last_name.nil? ? name : name + ' ' + participants[serial_no].last_name
+       list_sheet.row(row_counter).insert 1, name
        list_sheet.row(row_counter).insert 2, participants[serial_no].age
        list_sheet.row(row_counter).insert 3, participants[serial_no].education
        list_sheet.row(row_counter).insert 4, participants[serial_no].surrender_year
