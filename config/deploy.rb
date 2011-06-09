@@ -9,22 +9,24 @@ set :scm, :git
 #set :deploy_via, :remote_cache
 #set :branch, "master"
 
+prod_server = "184.73.192.153"
+staging_server = "50.17.185.45"
 if (!env.nil? && env == "production")
   puts "Deploying to Production server"
-  set :user, "vts"
-  set :deploy_to, "/home/vts/servers/vts"
-  role :web, "accom.bkinfo.in"                          # This may be the same as your `Web` server
-  role :app, "accom.bkinfo.in"                          # This may be the same as your `Web` server
-  role :db,  "accom.bkinfo.in", :primary => true # This is where Rails migrations will run
-  server_root = "/home/vts/servers/vts"
+  set :user, "bitnami"
+  set :deploy_to, "/home/bitnami/servers/vts"
+  role :web, prod_server                          # This may be the same as your `Web` server
+  role :app, prod_server
+  role :db,  prod_server, :primary => true # This is where Rails migrations will run
+  server_root = "/home/bitnami/servers/vts"
   set :branch, "deploy"
 else
   puts "Deploying to Staging server"
   set :user, "bitnami"
   set :deploy_to, "/home/bitnami/servers/VTS.git"
-  role :web, "50.17.185.45"                          # This may be the same as your `Web` server
-  role :app, "50.17.185.45"                          # This may be the same as your `Web` server
-  role :db,  "50.17.185.45", :primary => true # This is where Rails migrations will run
+  role :web, staging_server                          # This may be the same as your `Web` server
+  role :app, staging_server                          # This may be the same as your `Web` server
+  role :db,  staging_server, :primary => true # This is where Rails migrations will run
   server_root = "/home/bitnami/servers/VTS.git"
   set :branch, "staging"
 end
