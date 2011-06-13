@@ -1,0 +1,69 @@
+<script type="text/javascript" src="/javascripts/manage_trains.js"></script>
+<% content_for :title, "Manage Trains" %>
+
+<% content_for :nav, "registration" %>
+
+<div class="header">Manage Trains Here</div>
+
+<table border="0" width="50%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
+  <tr>
+    <td align="right"> Please select one of the option:</td>
+    <td align="right"><%= radio_button 'trains', 'add', '1', {:checked => true} %> Add Trains </td>
+    <td align="right"><%= radio_button 'trains', 'add', '0'%> Delete Trains </td>
+  </tr>
+</table>  
+
+<% form_tag :action => 'delete_train' do %>
+<table border="0" width="50%" cellspacing="4" cellpadding="2" align="center" style="margin: 10px auto;">
+  <tr id="delete_train_1" style="display:none;">
+    <td align="right" id="select_train_lbl">Select train to be deleted:&nbsp;&nbsp;&nbsp;&nbsp; </td>
+    <td align="left" id="select_train_fld">
+       <select class="select" id="trains" name="trains[name]">
+	       <% @train_names.each do |tr| -%>
+		       <option value="<%= tr.id %>"><%= tr.trnno %>, <%= tr.trnname %></option>
+	       <% end -%>
+       </select>
+    </td>
+    <td align="left" id="delete_btn"><%= submit_tag "Delete", :class => "button", :confirm => "Are you sure to delete this train?" %> </td>
+  </tr>
+</table>
+<% end %>
+
+<% form_tag :action => 'add_train' do %>
+<table border="0" width="50%" cellspacing="4" cellpadding="5" align="center" style="margin: 10px auto;">
+  <tr id="add_train_1">
+    <td align="right" id="train_no_lbl" >Train Number:&nbsp;&nbsp; </td>
+    <td align="left" id="train_no_fld"><input type="text" id="train_no" name="train[no]" size="5"> </td>
+    <td align="right" id="train_name_lbl" >Train Name:&nbsp;&nbsp; </td>
+    <td align="left" id="train_name_fld"><input type="text" id="train_name" name="train[name]" size="45"> </td>
+  </tr><tr/><tr/><tr/>
+  <tr id="add_train_2">
+    <td align="right" id="train_time_lbl" >Train Departure:&nbsp;&nbsp; </td>
+    <td align="left" id="train_timeHH_fld">
+      <select class="select" id="train_timeHH" name="train[train_timeHH]"> 
+         <% 24.times do |hr| -%>
+              <option value="<%= (hr) %>"><%= (hr) %></option>  
+	 <% end -%>
+      </select> HH
+      <select class="select" id="train_timeMM" name="train[train_timeMM]">
+         <% 59.times do |min| -%>
+              <option value="<%= (min+1) %>"><%= (min+1) %></option>  
+	 <% end -%>
+      </select> MM
+    </td>
+    <td align="right" id="train_days">Days:&nbsp;&nbsp; </td>
+    <td>
+      <input type="checkbox" name="Mon" checked="checked"/>Mon &nbsp;
+      <input type="checkbox" name="Tue" checked="checked"/>Tue &nbsp;
+      <input type="checkbox" name="Wed" checked="checked"/>Wed &nbsp;
+      <input type="checkbox" name="Thu" checked="checked"/>Thu &nbsp;
+      <input type="checkbox" name="Fri" checked="checked"/>Fri &nbsp;
+      <input type="checkbox" name="Sat" checked="checked"/>Sat &nbsp;
+      <input type="checkbox" name="Sun" checked="checked"/>Sun &nbsp;
+    </td>
+  </tr><tr/><tr/>
+  <tr id="add_train_3">
+     <td align="right" colspan="4" id="add_btn"><%= submit_tag "Add", :class => "button" %> </td>
+  </tr>
+</table>
+<% end %>
