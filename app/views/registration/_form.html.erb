@@ -1,5 +1,9 @@
 <script type="text/javascript" src="/javascripts/newregistration.js"></script>
-<%= render  :partial => "select_participants_form" }%>
+<% if @use_excel = true %>
+  <%= render  :partial => "select_participants_form" %>
+<% else %>
+  <%= render  :partial => "show_participants_form" %>
+<%  end %>
 <tr><td colspan="6"><br/><hr><br/></td></tr>
 <tr><td colspan="4"><br/><strong>Arrival Details of Participants to Madhuban</strong> <span class="req">*</span></td></tr>
 <tr>

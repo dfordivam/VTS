@@ -14,6 +14,7 @@ class RegistrationController < ApplicationController
   def new
     @user = current_user
     @registration = Registration.new
+    @use_excel = params[:use_excel]
     @centres  = Centre.find(:all, :order => "name")
     @events   = Event.find(:all, :conditions => ["active = ?", 1], :order => "start_date asc")
     @trains   = Train.find(:all, :order => "trnno")
