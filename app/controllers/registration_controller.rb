@@ -302,8 +302,48 @@ class RegistrationController < ApplicationController
       File.open(path, "wb") { |f| f.write(params[:Filedata].read) }
       render :text => 'File has been uploaded'
     end
+  end 
+ 
+  def manage_trains
+    @train_names = Train.find(:all,:order =>'trnname')
+    #render :text => "Manage trains here..." 
   end
   
+  def delete_train
+    train = Train.find_by_id(params[:trains][:name])
+    if Train.find_by_id(params[:trains][:name]).delete.save 
+       flash[:notice] = " Train '#{train.trnname}' has been deleted !!"
+    else
+       flash[:notice] = "#ERROR#Error in deleting train '#{train.trnno}' !!"
+    end 
+    redirect_to :action => 'manage_trains'
+  end
+
+  def add_train
+    train_no = params[:train][:no]
+    train_name = params[:train][:name]
+    train_time = params[:train][:train_timeHH] + ":" + params[:train][:train_timeMM] + ":00"
+    train_days_ar = []
+    train_days_ar.push("Mon") if params[:Mon] == "on"
+    train_days_ar.push("Tue") if params[:Tue] == "on"
+    train_days_ar.push("Wed") if params[:Wed] == "on"
+    train_days_ar.push("Thu") if params[:Thu] == "on"
+    train_days_ar.push("Fri") if params[:Fri] == "on"
+    train_days_ar.push("Sat") if params[:Sat] == "on"
+    train_days_ar.push("Sun") if params[:Sun] == "on"
+    train_days = train_days_ar.join(", ")
+    train_days = "Daily" if train_days_ar.length == 7
+    
+    if train_no == '' then flash[:notice] = "#ERROR#Train number can't be blank !!"
+    elsif train_name == '' then flash[:notice] = "#ERROR#Train Name can't be blank !!"
+    elsif train_days == '' then flash[:notice] = "#ERROR#Select at least one week day !!"
+    elsif ! Train.new(:trnno=>train_no, :trnname=>train_name, :departure=>train_time, :days=>train_days).save then flash[:notice] = "#ERROR#Error in adding train #{train_name} !!"
+    else
+      flash[:notice] = " Train '#{train_name}' has been added !!"
+    end
+    redirect_to :action => 'manage_trains'
+  end
+
   private
   def increment_year(updated_date)
     add_year = 0

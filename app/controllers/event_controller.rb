@@ -82,21 +82,18 @@ class EventController < ApplicationController
        FROM participants, centres, zones, addresses\ 
        WHERE participants.id IN (SELECT distinct participant_id FROM participants_registrations\ 
        WHERE registration_id IN(SELECT registrations.id FROM registrations WHERE registrations.event_id = #{event_id}))\ 
-       AND (participants.centre_id = centres.id)\ 
-       AND (centres.zone_id = zones.id)\ 
-       AND (centres.address_id = addresses.id)\ 
-       AND participants.category = '#{participant_cat}'
-       ORDER BY zones.name, centres.name, addresses.addr1, participants.first_name"
+       AND participants.category = '#{participant_cat}'"
+       #ORDER BY zones.name, centres.name, addresses.addr1, participants.first_name"
 
      participants=Participant.find_by_sql(query)
-     centres=Centre.find_by_sql(query)
-     zones=Zone.find_by_sql(query)
-     addresses=Address.find_by_sql(query)
+#     centres=Centre.find_by_sql(query)
+#     zones=Zone.find_by_sql(query)
+#     addresses=Address.find_by_sql(query)
      if participants.length == 0  
         flash[:notice] = "#ERROR#No '#{participant_cat}' registered for the event '#{event_name}' !!"
 	redirect_to :action => 'list'
      else 
-        write_excel(list_sheet, participants, centres, zones, addresses, event_name)   
+        write_excel(list_sheet, participants)   
 	list_book.write "#{RAILS_ROOT}/public/downloads/#{list_name}"
 	list_path = "#{RAILS_ROOT}/public/downloads/#{list_name}"
 	send_file list_path, :type => 'application/vnd.ms-excel'
@@ -105,10 +102,10 @@ class EventController < ApplicationController
 
   private
   
-  def write_excel(list_sheet, participants, centres, zones, addresses, event_name)
+  def write_excel(list_sheet, participants)
      row_counter = 0
      list_sheet.row(row_counter).default_format = Spreadsheet::Format.new(:weight=>"bold",:color=>"red",:pattern  => 1,:pattern_fg_color => "yellow")
-     list_sheet.row(row_counter).insert 3, event_name
+#     list_sheet.row(row_counter).insert 3, event_name
      row_counter += 2
      list_sheet.row(row_counter).default_format = Spreadsheet::Format.new(:weight=>"bold")
      list_sheet.row(row_counter).insert 0, "S.No."
@@ -131,9 +128,9 @@ class EventController < ApplicationController
        list_sheet.row(row_counter).insert 3, participants[serial_no].education
        list_sheet.row(row_counter).insert 4, participants[serial_no].surrender_year
        list_sheet.row(row_counter).insert 5, participants[serial_no].in_gyan
-       list_sheet.row(row_counter).insert 6, addresses[serial_no].addr1
-       list_sheet.row(row_counter).insert 7, Centre.find_by_id(centres[serial_no].id).name
-       list_sheet.row(row_counter).insert 8, zones[serial_no].name
+#       list_sheet.row(row_counter).insert 6, addresses[serial_no].addr1
+#       list_sheet.row(row_counter).insert 7, Centre.find_by_id(centres[serial_no].id).name
+#       list_sheet.row(row_counter).insert 8, zones[serial_no].name
      end
   end
 end
