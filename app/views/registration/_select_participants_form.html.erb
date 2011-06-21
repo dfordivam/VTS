@@ -1,15 +1,6 @@
 <% if @user.id != 1 || @user.centre_id != 4068 -%> 
   <div id="select_participant" >
     <tr><td colspan="6"><br/><hr><br/></td></tr>
-    <tr>
-      <td colspan="6">
-        <strong>Select Participants from below list </strong> <span class="req">*</span>
-        <% if @user.id != 1 && @user.centre_id != 4068 -%>
-          <p class="ar"><%= link_to "Create New Participant &raquo;", {:controller => 'participant', :action => 'new'}, :class => 'button' %></p>
-        <% end -%>
-      </td>
-    </tr>
-
     <tr><td colspan="6" align="center"><img id="list_loader" src="/images/loaderbig.gif" alt="loader" width="48px" height="48px" style="display: none;" /></td></tr>
     <tr><td>
        <div id="div_teacher">

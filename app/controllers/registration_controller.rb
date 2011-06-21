@@ -15,15 +15,22 @@ class RegistrationController < ApplicationController
     @user = current_user
     @registration = Registration.new
     @use_excel = params[:use_excel]
+    if @use_excel = true
+      @participants_bk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "1" ],  :order => "first_name, last_name")
+      @participants_bk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "1" ],  :order => "first_name, last_name")
+      @participants_nbk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "0" ],  :order => "first_name, last_name")
+      @participants_nbk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "0" ],  :order => "first_name, last_name")
+      @participants_teachers =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "teacher", current_user.centre_id, "1" ],  :order => "first_name, last_name") 
+    else
+      @participants_bk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "1" ],  :order => "first_name, last_name")
+      @participants_bk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "1" ],  :order => "first_name, last_name")
+      @participants_nbk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "0" ],  :order => "first_name, last_name")
+      @participants_nbk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "0" ],  :order => "first_name, last_name")
+      @participants_teachers =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "teacher", current_user.centre_id, "1" ],  :order => "first_name, last_name") 
+    end
     @centres  = Centre.find(:all, :order => "name")
     @events   = Event.find(:all, :conditions => ["active = ?", 1], :order => "start_date asc")
     @trains   = Train.find(:all, :order => "trnno")
-    @participants_bk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "1" ],  :order => "first_name, last_name")
-    @participants_bk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "1" ],  :order => "first_name, last_name")
-    @participants_nbk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "0" ],  :order => "first_name, last_name")
-    @participants_nbk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "0" ],  :order => "first_name, last_name")
-    @participants_teachers =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "teacher", current_user.centre_id, "1" ],  :order => "first_name, last_name") 
-
     @validate_users = 1
     if @user.id == 1 && @user.centre_id == 4068
       @validate_users = 0
@@ -51,7 +58,7 @@ class RegistrationController < ApplicationController
 #      end
       items_per_page = 1000
       @participants = @participants_1.paginate  :per_page => items_per_page, :page => params[:page]
-      redirect_to :action => 'new', :locals => { :use_excel => true}
+      redirect_to :action => 'new', :use_excel => true
     else
       flash[:notice] = '#ERROR#File type error. Please upload MS-Excel File'
       redirect_to :action => 'new_excel'
