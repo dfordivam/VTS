@@ -1,0 +1,36 @@
+<% content_for :title, "Registration" %>
+
+<% content_for :nav, "registration" %>
+
+<div class="header">Program Registration</div>
+<table border="0" width="95%" align="center" style="margin: 0 auto;">
+	<tr><td>
+		<p><strong>Note: Registrations related to WING, please first inform and get permission from your wing coordinator.</strong></p>
+	</td></tr>
+</table>
+<table border="0" width="85%" align="center" style="margin: 0 auto;">
+	<tr><td><%= error_messages_for 'registration'%></td></tr>
+</table>
+
+<div id="error_message" class="error_message" style="display: none;">
+	<%= @message %>
+	<ul id="errors"></ul>
+</div>
+
+<div>
+  Step 1: Click here to download the latest participants excel file
+  Step 2: Create a new excel file and copy-paste the "id" of all the participants for whom registration is required.
+  Step 3: Upload the excel file and click submit button
+  Step 4: Check the list of participants and provide details of registration 
+</div>
+
+<div>
+  Upload Excel:
+  <% form_tag("uploadexcel",:method => 'post', :multipart=>true) do %>
+    <h3>
+      <label for="upload_file">Upload Excel File (Containing Participants ids)</label> :
+      <%= file_field 'upload_excel',:excel_file %>
+      <%= submit_tag " Upload " %>
+    </h3>
+  <% end %>
+</div>

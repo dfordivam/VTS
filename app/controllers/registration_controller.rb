@@ -29,7 +29,36 @@ class RegistrationController < ApplicationController
       @validate_users = 0
     end
   end
+
+  def new_excel
+    @user = current_user
+  end
   
+  def uploadexcel
+    if (params[:upload_excel].nil? || params[:upload_excel][:excel_file].nil?)
+      flash[:notice] = '#ERROR#Please select a file by clicking chose file'
+      redirect_to :action => 'new_excel'
+    else
+    excel_file = params[:upload_excel][:excel_file]
+    if (excel_file.content_type && excel_file.content_type.chomp == "application/vnd.ms-excel")
+      @original_file_name = excel_file.original_filename
+      @file_name = rand(999999).to_s + "-" + @original_file_name
+#      path_to_file = _save_file( excel_file ,  @file_name)
+#      @collections = _extract_data_from_file(path_to_file)
+      @participants_1 = []
+#      @collections.each_with_index do |collection, index| 
+#        @participants_1[index] = collection[:participant]
+#      end
+      items_per_page = 1000
+      @participants = @participants_1.paginate  :per_page => items_per_page, :page => params[:page]
+      redirect_to :action => 'new', :locals => { :use_excel => true}
+    else
+      flash[:notice] = '#ERROR#File type error. Please upload MS-Excel File'
+      redirect_to :action => 'new_excel'
+    end
+    end
+  end
+
   def edit
     @user = current_user
     @registration = Registration.find(params[:id])
