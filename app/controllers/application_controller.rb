@@ -25,6 +25,14 @@ class ApplicationController < ActionController::Base
     sess.destroy if sess
   end
 
+  def _save_file(directory, filepath, original_name)
+#    directory = "public/uploads/participant_excel_files"
+    # create the file path
+    path = File.join(directory,original_name)
+    # write the file
+    File.open(path, "wb") { |f| f.write(filepath.read) }
+    return path
+  end
 
   private
 

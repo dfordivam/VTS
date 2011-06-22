@@ -164,7 +164,7 @@ class ParticipantController < ApplicationController
     if (excel_file.content_type && excel_file.content_type.chomp == "application/vnd.ms-excel")
       @original_file_name = excel_file.original_filename
       @file_name = rand(999999).to_s + "-" + @original_file_name
-      path_to_file = _save_file( excel_file ,  @file_name)
+      path_to_file = _save_file("public/uploads/participant_excel_files", excel_file ,  @file_name)
       @collections = _extract_data_from_file(path_to_file)
       @participants_1 = []
       @collections.each_with_index do |collection, index| 
@@ -248,15 +248,6 @@ class ParticipantController < ApplicationController
     else
       return false
     end
-  end
-
-  def _save_file(filepath, original_name)
-    directory = "public/uploads/participant_excel_files"
-    # create the file path
-    path = File.join(directory,original_name)
-    # write the file
-    File.open(path, "wb") { |f| f.write(filepath.read) }
-    return path
   end
 
   def _extract_data_from_file(path_to_file)
