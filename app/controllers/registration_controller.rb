@@ -15,7 +15,8 @@ class RegistrationController < ApplicationController
     @user = current_user
     @registration = Registration.new
     @use_excel = params[:use_excel]
-    if @use_excel = true
+    @file_path = params[:file_path]
+    if @use_excel == true and @file_path
       @participants_bk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "1" ],  :order => "first_name, last_name")
       @participants_bk_sis =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "sister", current_user.centre_id, "1" ],  :order => "first_name, last_name")
       @participants_nbk_bro =  Participant.find(:all, :conditions => ["category = ? and centre_id = ? and is_bk = ?", "brother", current_user.centre_id, "0" ],  :order => "first_name, last_name")
@@ -50,15 +51,15 @@ class RegistrationController < ApplicationController
     if (excel_file.content_type && excel_file.content_type.chomp == "application/vnd.ms-excel")
       @original_file_name = excel_file.original_filename
       @file_name = rand(999999).to_s + "-" + @original_file_name
-#      path_to_file = _save_file( excel_file ,  @file_name)
+      path_to_file = _save_file("public/uploads/registration_excel_files" excel_file ,  @file_name)
 #      @collections = _extract_data_from_file(path_to_file)
-      @participants_1 = []
+#      @participants_1 = []
 #      @collections.each_with_index do |collection, index| 
 #        @participants_1[index] = collection[:participant]
 #      end
-      items_per_page = 1000
-      @participants = @participants_1.paginate  :per_page => items_per_page, :page => params[:page]
-      redirect_to :action => 'new', :use_excel => true
+#      items_per_page = 1000
+#      @participants = @participants_1.paginate  :per_page => items_per_page, :page => params[:page]
+      redirect_to :action => 'new', :use_excel => true, :file_name => @file_name
     else
       flash[:notice] = '#ERROR#File type error. Please upload MS-Excel File'
       redirect_to :action => 'new_excel'
